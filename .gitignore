@@ -5,3 +5,4 @@ desktop.ini
 Thumbs.db
 deploy.py
 deploy.sh
+diag.py
