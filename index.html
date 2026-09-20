@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ElBus_palmira - Estructura Institucional</title>
+<style>
+:root {
+  --bg: #0f1117; --bg2: #1a1d27; --bg3: #252836;
+  --border: #363a4e; --text: #e4e6ef; --text2: #9ca0b0;
+  --accent: #6c63ff; --accent2: #4ecdc4;
+  --green: #2ecc71; --yellow: #f39c12; --red: #e74c3c; --orange: #e67e22;
+  /* Thematic colors */
+  --t-electivo-bg: #1a3a2a; --t-electivo-border: #2ecc71;
+  --t-social-bg: #2a1a3a; --t-social-border: #9b59b6;
+  --t-desarrollo-bg: #1a2a3a; --t-desarrollo-border: #3498db;
+  --t-economico-bg: #3a2a1a; --t-economico-border: #e67e22;
+  --t-infraestructura-bg: #2a2a1a; --t-infraestructura-border: #f1c40f;
+  --t-constitucional-bg: #3a1a1a; --t-constitucional-border: #e74c3c;
+  --t-entidad-bg: #1a3a3a; --t-entidad-border: #1abc9c;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); overflow: hidden; height: 100vh; user-select: none; }
+.app { display: flex; height: 100vh; }
+.sidebar { width: 260px; background: var(--bg2); border-right: 1px solid var(--border); display: flex; flex-direction: column; flex-shrink: 0; }
+.sidebar-header { padding: 16px; border-bottom: 1px solid var(--border); }
+.sidebar-header h1 { font-size: 18px; color: var(--accent); letter-spacing: 2px; }
+.sidebar-header p { font-size: 11px; color: var(--text2); margin-top: 4px; }
+.nav { flex: 1; overflow-y: auto; padding: 8px; }
+.nav-item { padding: 10px 12px; border-radius: 8px; cursor: pointer; margin-bottom: 2px; transition: all .15s; display: flex; align-items: center; gap: 10px; font-size: 13px; }
+.nav-item:hover { background: var(--bg3); }
+.nav-item.active { background: var(--accent); color: #fff; }
+.nav-item .badge { font-size: 10px; padding: 2px 6px; border-radius: 10px; background: var(--bg3); color: var(--text2); margin-left: auto; }
+.nav-item.active .badge { background: rgba(255,255,255,.2); color: #fff; }
+.nav-item .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.nav-section { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text2); padding: 12px 12px 4px; }
+.sidebar-footer { padding: 12px; border-top: 1px solid var(--border); display: flex; gap: 8px; flex-wrap: wrap; }
+.btn { padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg3); color: var(--text); cursor: pointer; font-size: 12px; transition: all .15s; }
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.btn-primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn-primary:hover { background: #5a52e0; }
+.btn-danger { border-color: var(--red); color: var(--red); }
+.btn-danger:hover { background: var(--red); color: #fff; }
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.toolbar { padding: 12px 16px; background: var(--bg2); border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; }
+.toolbar h2 { font-size: 16px; flex: 1; }
+.toolbar .stats { display: flex; gap: 16px; font-size: 12px; color: var(--text2); }
+.toolbar .stat-val { color: var(--accent); font-weight: 600; }
+.canvas-wrap { flex: 1; overflow: auto; padding: 20px; position: relative; }
+.svg-container { display: inline-block; min-width: 100%; }
+.svg-container svg { display: block; }
+/* Node styles */
+.node { cursor: grab; transition: filter .15s; }
+.node:hover { filter: brightness(1.3); }
+.node.dragging { opacity: 0.7; cursor: grabbing; filter: drop-shadow(0 0 12px var(--accent)); }
+.node-rect { rx: 8; ry: 8; stroke-width: 2; }
+/* Thematic node fills */
+.node-rect[data-tematico="electivo"] { fill: var(--t-electivo-bg); stroke: var(--t-electivo-border); }
+.node-rect[data-tematico="social"] { fill: var(--t-social-bg); stroke: var(--t-social-border); }
+.node-rect[data-tematico="desarrollo"] { fill: var(--t-desarrollo-bg); stroke: var(--t-desarrollo-border); }
+.node-rect[data-tematico="economico"] { fill: var(--t-economico-bg); stroke: var(--t-economico-border); }
+.node-rect[data-tematico="infraestructura"] { fill: var(--t-infraestructura-bg); stroke: var(--t-infraestructura-border); }
+.node-rect[data-tematico="constitucional"] { fill: var(--t-constitucional-bg); stroke: var(--t-constitucional-border); }
+.node-rect[data-tematico="entidad"] { fill: var(--t-entidad-bg); stroke: var(--t-entidad-border); }
+/* Editable indicator */
+.node-rect.editable { stroke-dasharray: 6,3; }
+.node-label { font-size: 11px; fill: var(--text); text-anchor: middle; font-weight: 600; pointer-events: none; }
+.node-sublabel { font-size: 9px; fill: var(--text2); text-anchor: middle; pointer-events: none; }
+.node-person { font-size: 10px; fill: var(--accent2); text-anchor: middle; font-weight: 600; pointer-events: none; }
+.node-status { font-size: 8px; text-anchor: middle; pointer-events: none; }
+.edge { stroke: var(--border); stroke-width: 1.5; fill: none; }
+.edge-thematic { stroke-width: 1.5; }
+.status-pendiente { fill: var(--yellow); }
+.status-confirmado { fill: var(--green); }
+.status-reservado { fill: var(--orange); }
+.status-vacio { fill: var(--text2); }
+/* Modal */
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: 100; align-items: center; justify-content: center; }
+.modal-overlay.show { display: flex; }
+.modal { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; width: 420px; max-height: 80vh; overflow-y: auto; }
+.modal-header { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+.modal-header h3 { font-size: 15px; }
+.modal-close { background: none; border: none; color: var(--text2); cursor: pointer; font-size: 20px; }
+.modal-body { padding: 20px; }
+.form-group { margin-bottom: 14px; }
+.form-group label { display: block; font-size: 12px; color: var(--text2); margin-bottom: 4px; }
+.form-group input, .form-group select, .form-group textarea { width: 100%; padding: 8px 10px; background: var(--bg3); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-size: 13px; }
+.form-group textarea { height: 60px; resize: vertical; }
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--accent); }
+.modal-footer { padding: 12px 20px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 8px; }
+.info-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 12px; border-bottom: 1px solid var(--border); }
+.info-label { color: var(--text2); }
+.info-val { color: var(--text); font-weight: 500; }
+/* Legend */
+.legend { position: fixed; bottom: 16px; right: 16px; background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 12px; font-size: 11px; z-index: 10; }
+.legend-title { font-weight: 600; margin-bottom: 6px; font-size: 12px; }
+.legend-item { display: flex; align-items: center; gap: 8px; margin-bottom: 3px; }
+.legend-color { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+.legend-divider { border-top: 1px solid var(--border); margin: 6px 0; }
+/* Summary panel */
+.summary-panel { display: none; position: fixed; top: 60px; right: 16px; width: 320px; max-height: calc(100vh - 80px); background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; z-index: 50; overflow-y: auto; }
+.summary-panel.show { display: block; }
+.summary-header { padding: 14px 16px; border-bottom: 1px solid var(--border); font-size: 14px; font-weight: 600; }
+.summary-body { padding: 12px 16px; }
+.summary-item { padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 12px; }
+.summary-item:last-child { border-bottom: none; }
+/* Toast */
+.toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--green); color: #fff; padding: 10px 20px; border-radius: 8px; font-size: 13px; z-index: 200; opacity: 0; transition: opacity .3s; pointer-events: none; }
+.toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h1>ElBus_palmira</h1>
+      <p>Estructura Institucional 2026</p>
+    </div>
+    <div class="nav">
+      <div class="nav-section">Vista General</div>
+      <div class="nav-item active" data-view="00"><div class="dot" style="background:var(--accent)"></div>Organigrama Completo<span class="badge">42</span></div>
+      <div class="nav-section">Ejes Tematicos</div>
+      <div class="nav-item" data-view="01"><div class="dot" style="background:var(--t-social-border)"></div>Eje Social<span class="badge">8</span></div>
+      <div class="nav-item" data-view="02"><div class="dot" style="background:var(--t-desarrollo-border)"></div>Eje Desarrollo<span class="badge">8</span></div>
+      <div class="nav-item" data-view="03"><div class="dot" style="background:var(--t-economico-border)"></div>Eje Economico<span class="badge">10</span></div>
+      <div class="nav-item" data-view="04"><div class="dot" style="background:var(--t-infraestructura-border)"></div>Infraestructura<span class="badge">3</span></div>
+      <div class="nav-item" data-view="06"><div class="dot" style="background:var(--t-constitucional-border)"></div>Eje Constitucional<span class="badge">3</span></div>
+      <div class="nav-section">Entidades</div>
+      <div class="nav-item" data-view="05"><div class="dot" style="background:var(--t-entidad-border)"></div>Descentralizados<span class="badge">6</span></div>
+      <div class="nav-section">Herramientas</div>
+      <div class="nav-item" data-view="summary">Resumen Asignaciones</div>
+    </div>
+    <div class="sidebar-footer">
+      <button class="btn" onclick="exportToExcel()">Exportar Excel</button>
+      <button class="btn" onclick="importData()">Importar</button>
+      <button class="btn btn-danger" onclick="resetLayout()">Reset Layout</button>
+    </div>
+  </div>
+  <div class="main">
+    <div class="toolbar">
+      <h2 id="view-title">Organigrama Completo - Administracion Central</h2>
+      <div class="stats">
+        <span>Total LNR: <span class="stat-val" id="stat-total">42</span></span>
+        <span>Asignados: <span class="stat-val" id="stat-asignados">0</span></span>
+        <span>Pendientes: <span class="stat-val" id="stat-pendientes">42</span></span>
+      </div>
+    </div>
+    <div class="canvas-wrap" id="canvas-wrap">
+      <div class="svg-container" id="svg-container"></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modal-title">Editar Plaza</h3>
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div id="modal-info"></div>
+      <div class="form-group"><label>Nombre Asignado</label><input type="text" id="inp-nombre" placeholder="Nombre completo de la persona"></div>
+      <div class="form-group"><label>Padrino / Responsable Politico</label><input type="text" id="inp-padrino" placeholder="Quien negocia esta plaza"></div>
+      <div class="form-group"><label>Estado</label><select id="inp-estado"><option value="vacio">Sin asignar</option><option value="pendiente">Pendiente</option><option value="confirmado">Confirmado</option><option value="reservado">Reservado</option></select></div>
+      <div class="form-group"><label>Notas</label><textarea id="inp-notas" placeholder="Observaciones adicionales"></textarea></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="clearAssignment()">Limpiar</button>
+      <button class="btn btn-primary" onclick="saveAssignment()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<div class="summary-panel" id="summary-panel">
+  <div class="summary-header">Resumen de Asignaciones</div>
+  <div class="summary-body" id="summary-body"></div>
+</div>
+
+<div class="legend">
+  <div class="legend-title">Ejes Tematicos</div>
+  <div class="legend-item"><div class="legend-color" style="background:var(--t-electivo-bg);border:2px solid var(--t-electivo-border)"></div> Alcalde (Electivo)</div>
+  <div class="legend-item"><div class="legend-color" style="background:var(--t-social-bg);border:2px solid var(--t-social-border)"></div> Eje Social</div>
+  <div class="legend-item"><div class="legend-color" style="background:var(--t-desarrollo-bg);border:2px solid var(--t-desarrollo-border)"></div> Eje Desarrollo</div>
+  <div class="legend-item"><div class="legend-color" style="background:var(--t-economico-bg);border:2px solid var(--t-economico-border)"></div> Eje Economico</div>
+  <div class="legend-item"><div class="legend-color" style="background:var(--t-infraestructura-bg);border:2px solid var(--t-infraestructura-border)"></div> Infraestructura</div>
+  <div class="legend-item"><div class="legend-color" style="background:var(--t-constitucional-bg);border:2px solid var(--t-constitucional-border)"></div> Constitucional</div>
+  <div class="legend-item"><div class="legend-color" style="background:var(--t-entidad-bg);border:2px solid var(--t-entidad-border)"></div> Descentralizados</div>
+  <div class="legend-divider"></div>
+  <div class="legend-title">Estados</div>
+  <div class="legend-item"><span style="color:var(--yellow)">&#9679;</span> Pendiente</div>
+  <div class="legend-item"><span style="color:var(--green)">&#9679;</span> Confirmado</div>
+  <div class="legend-item"><span style="color:var(--orange)">&#9679;</span> Reservado</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
+
+<script>
+const STORAGE_KEY = 'ElBus_palmira_asignaciones';
+const LAYOUT_KEY = 'ElBus_palmira_layouts';
+
+// Thematic color map for edges
+const TEMATIC_COLORS = {
+  electivo: '#2ecc71', social: '#9b59b6', desarrollo: '#3498db',
+  economico: '#e67e22', infraestructura: '#f1c40f', constitucional: '#e74c3c', entidad: '#1abc9c'
+};
+
+const data = {
+  "00": {
+    title: "Organigrama Completo - Administracion Central",
+    nodes: [
+      { id: "ALC", x: 600, y: 30, w: 200, h: 50, label: "ALCALDE", sub: "Despacho del Alcalde", type: "electivo", tematico: "electivo", plazas: 1, grado: 4, norma: "Decreto 334/2022" },
+      { id: "DIR-GRAL", x: 600, y: 110, w: 200, h: 45, label: "DIRECCIONES", sub: "7 plazas - Grado 01", type: "lnr", tematico: "desarrollo", plazas: 7, grado: 1, norma: "Decreto 334/2022" },
+      { id: "SEC-GEN", x: 40, y: 200, w: 170, h: 45, label: "Secretaria General", sub: "Sec. Despacho - Grado 03", type: "lnr", tematico: "constitucional", plazas: 1, grado: 3 },
+      { id: "SEC-HAC", x: 220, y: 200, w: 170, h: 45, label: "Sec. Hacienda", sub: "Sec. Despacho - Grado 03", type: "lnr", tematico: "economico", plazas: 1, grado: 3 },
+      { id: "SEC-PLA", x: 400, y: 200, w: 170, h: 45, label: "Sec. Planeacion", sub: "Sec. Despacho - Grado 03", type: "lnr", tematico: "desarrollo", plazas: 1, grado: 3 },
+      { id: "SEC-GOB", x: 580, y: 200, w: 170, h: 45, label: "Sec. Gobierno", sub: "Sec. Despacho - Grado 03", type: "lnr", tematico: "desarrollo", plazas: 1, grado: 3 },
+      { id: "SEC-SEG", x: 760, y: 200, w: 170, h: 45, label: "Sec. Seguridad", sub: "Sec. Despacho - Grado 03", type: "lnr", tematico: "constitucional", plazas: 1, grado: 3 },
+      { id: "SEC-PAR", x: 940, y: 200, w: 170, h: 45, label: "Sec. Participacion", sub: "Sec. Despacho - Grado 03", type: "lnr", tematico: "social", plazas: 1, grado: 3 },
+      { id: "SEC-DES", x: 40, y: 310, w: 170, h: 45, label: "Sec. Des. Institucional", sub: "Sec. Despacho - Grado 03", type: "lnr", tematico: "desarrollo", plazas: 1, grado: 3 },
+      { id: "SEC-JUR", x: 220, y: 310, w: 170, h: 45, label: "Sec. Juridica", sub: "Sec. Despacho - Grado 03", type: "lnr", tematico: "constitucional", plazas: 1, grado: 3 },
+      { id: "SEC-INF", x: 400, y: 310, w: 170, h: 45, label: "Sec. Infraestructura", sub: "Sec. Despacho - Grado 03", type: "lnr", tematico: "infraestructura", plazas: 1, grado: 3 },
+      { id: "SEC-CUL", x: 580, y: 310, w: 170, h: 45, label: "Sec. Cultura", sub: "Sec. Despacho - Grado 03", type: "lnr", tematico: "economico", plazas: 1, grado: 3 },
+      { id: "SEC-EDU", x: 760, y: 310, w: 170, h: 45, label: "Sec. Educacion", sub: "Sec. Despacho - Grado 03", type: "lnr", tematico: "social", plazas: 1, grado: 3 },
+      { id: "SEC-SAL", x: 940, y: 310, w: 170, h: 45, label: "Sec. Salud", sub: "Sec. Despacho - Grado 03", type: "lnr", tematico: "social", plazas: 1, grado: 3 },
+      { id: "SEC-AGR", x: 40, y: 420, w: 170, h: 45, label: "Sec. Agropecuaria", sub: "Sec. Despacho - Grado 03", type: "lnr", tematico: "economico", plazas: 1, grado: 3 },
+      { id: "SEC-INS", x: 220, y: 420, w: 170, h: 45, label: "Sec. Integracion Social", sub: "Sec. Despacho - Grado 03", type: "lnr", tematico: "social", plazas: 1, grado: 3 },
+      { id: "SEC-TRA", x: 400, y: 420, w: 170, h: 45, label: "Sec. Transito", sub: "Sec. Despacho - Grado 03", type: "lnr", tematico: "economico", plazas: 1, grado: 3 },
+      { id: "SUB-HAC", x: 220, y: 270, w: 140, h: 35, label: "Sub. Hacienda", sub: "3 plazas - Grado 01", type: "lnr", tematico: "economico", plazas: 3, grado: 1, parent: "SEC-HAC" },
+      { id: "SUB-PLA", x: 400, y: 270, w: 140, h: 35, label: "Sub. Planeacion", sub: "2 plazas - Grado 01", type: "lnr", tematico: "desarrollo", plazas: 2, grado: 1, parent: "SEC-PLA" },
+      { id: "SUB-GOB", x: 580, y: 270, w: 140, h: 35, label: "Sub. Gobierno", sub: "1 plaza - Grado 01", type: "lnr", tematico: "desarrollo", plazas: 1, grado: 1, parent: "SEC-GOB" },
+      { id: "SUB-DES-RF", x: 20, y: 370, w: 100, h: 35, label: "Sub. Rec.Fisicos", sub: "1 plaza", type: "lnr", tematico: "desarrollo", plazas: 1, grado: 1, parent: "SEC-DES" },
+      { id: "SUB-DES-TH", x: 130, y: 370, w: 100, h: 35, label: "Sub. Talento Hum.", sub: "1 plaza", type: "lnr", tematico: "desarrollo", plazas: 1, grado: 1, parent: "SEC-DES" },
+      { id: "SUB-INF", x: 400, y: 370, w: 140, h: 35, label: "Sub. Infraestructura", sub: "2 plazas - Grado 01", type: "lnr", tematico: "infraestructura", plazas: 2, grado: 1, parent: "SEC-INF" },
+      { id: "SUB-EDU", x: 760, y: 370, w: 140, h: 35, label: "Sub. Educacion", sub: "3 plazas - Grado 01", type: "lnr", tematico: "social", plazas: 3, grado: 1, parent: "SEC-EDU" },
+      { id: "SUB-SAL", x: 940, y: 370, w: 140, h: 35, label: "Sub. Salud", sub: "2 plazas - Grado 01", type: "lnr", tematico: "social", plazas: 2, grado: 1, parent: "SEC-SAL" },
+      { id: "SUB-AGR", x: 40, y: 480, w: 140, h: 35, label: "Sub. Agropecuaria", sub: "1 plaza - Grado 01", type: "lnr", tematico: "economico", plazas: 1, grado: 1, parent: "SEC-AGR" },
+      { id: "SUB-INS", x: 220, y: 480, w: 140, h: 35, label: "Sub. Int. Social", sub: "2 plazas - Grado 01", type: "lnr", tematico: "social", plazas: 2, grado: 1, parent: "SEC-INS" },
+      { id: "SUB-TRA", x: 400, y: 480, w: 140, h: 35, label: "Sub. Transito", sub: "2 plazas - Grado 01", type: "lnr", tematico: "economico", plazas: 2, grado: 1, parent: "SEC-TRA" }
+    ],
+    edges: [
+      { from: "ALC", to: "DIR-GRAL" },
+      { from: "ALC", to: "SEC-GEN" },{ from: "ALC", to: "SEC-HAC" },{ from: "ALC", to: "SEC-PLA" },
+      { from: "ALC", to: "SEC-GOB" },{ from: "ALC", to: "SEC-SEG" },{ from: "ALC", to: "SEC-PAR" },
+      { from: "ALC", to: "SEC-DES" },{ from: "ALC", to: "SEC-JUR" },{ from: "ALC", to: "SEC-INF" },
+      { from: "ALC", to: "SEC-CUL" },{ from: "ALC", to: "SEC-EDU" },{ from: "ALC", to: "SEC-SAL" },
+      { from: "ALC", to: "SEC-AGR" },{ from: "ALC", to: "SEC-INS" },{ from: "ALC", to: "SEC-TRA" },
+      { from: "SEC-HAC", to: "SUB-HAC" },{ from: "SEC-PLA", to: "SUB-PLA" },{ from: "SEC-GOB", to: "SUB-GOB" },
+      { from: "SEC-DES", to: "SUB-DES-RF" },{ from: "SEC-DES", to: "SUB-DES-TH" },
+      { from: "SEC-INF", to: "SUB-INF" },{ from: "SEC-EDU", to: "SUB-EDU" },{ from: "SEC-SAL", to: "SUB-SAL" },
+      { from: "SEC-AGR", to: "SUB-AGR" },{ from: "SEC-INS", to: "SUB-INS" },{ from: "SEC-TRA", to: "SUB-TRA" }
+    ]
+  },
+  "01": {
+    title: "Eje Social - Salud, Educacion, Integracion Social, Participacion",
+    nodes: [
+      { id: "ALC", x: 450, y: 30, w: 200, h: 50, label: "ALCALDE", sub: "Despacho del Alcalde", type: "electivo", tematico: "electivo", plazas: 1 },
+      { id: "SEC-PAR", x: 40, y: 130, w: 180, h: 45, label: "Sec. Participacion", sub: "Grado 03 - 1 plaza", type: "lnr", tematico: "social", plazas: 1, grado: 3 },
+      { id: "SEC-EDU", x: 260, y: 130, w: 180, h: 45, label: "Sec. Educacion", sub: "Grado 03 - 1 plaza", type: "lnr", tematico: "social", plazas: 1, grado: 3 },
+      { id: "SEC-SAL", x: 480, y: 130, w: 180, h: 45, label: "Sec. Salud", sub: "Grado 03 - 1 plaza", type: "lnr", tematico: "social", plazas: 1, grado: 3 },
+      { id: "SEC-INS", x: 700, y: 130, w: 180, h: 45, label: "Sec. Integracion Social", sub: "Grado 03 - 1 plaza", type: "lnr", tematico: "social", plazas: 1, grado: 3 },
+      { id: "SUB-EDU", x: 260, y: 210, w: 150, h: 35, label: "Sub. Educacion", sub: "3 plazas - Grado 01", type: "lnr", tematico: "social", plazas: 3, grado: 1 },
+      { id: "SUB-SAL", x: 480, y: 210, w: 150, h: 35, label: "Sub. Salud", sub: "2 plazas - Grado 01", type: "lnr", tematico: "social", plazas: 2, grado: 1 },
+      { id: "SUB-INS", x: 700, y: 210, w: 150, h: 35, label: "Sub. Int. Social", sub: "2 plazas - Grado 01", type: "lnr", tematico: "social", plazas: 2, grado: 1 }
+    ],
+    edges: [
+      { from: "ALC", to: "SEC-PAR" },{ from: "ALC", to: "SEC-EDU" },{ from: "ALC", to: "SEC-SAL" },{ from: "ALC", to: "SEC-INS" },
+      { from: "SEC-EDU", to: "SUB-EDU" },{ from: "SEC-SAL", to: "SUB-SAL" },{ from: "SEC-INS", to: "SUB-INS" }
+    ]
+  },
+  "02": {
+    title: "Eje Desarrollo - Planeacion, Desarrollo Institucional, Gobierno",
+    nodes: [
+      { id: "ALC", x: 450, y: 30, w: 200, h: 50, label: "ALCALDE", sub: "Despacho del Alcalde", type: "electivo", tematico: "electivo", plazas: 1 },
+      { id: "SEC-PLA", x: 80, y: 130, w: 180, h: 45, label: "Sec. Planeacion", sub: "Grado 03 - 1 plaza", type: "lnr", tematico: "desarrollo", plazas: 1, grado: 3 },
+      { id: "SEC-DES", x: 340, y: 130, w: 180, h: 45, label: "Sec. Des. Institucional", sub: "Grado 03 - 1 plaza", type: "lnr", tematico: "desarrollo", plazas: 1, grado: 3 },
+      { id: "SEC-GOB", x: 600, y: 130, w: 180, h: 45, label: "Sec. Gobierno", sub: "Grado 03 - 1 plaza", type: "lnr", tematico: "desarrollo", plazas: 1, grado: 3 },
+      { id: "SUB-PLA", x: 80, y: 210, w: 150, h: 35, label: "Sub. Planeacion", sub: "2 plazas - Grado 01", type: "lnr", tematico: "desarrollo", plazas: 2, grado: 1 },
+      { id: "SUB-DES-RF", x: 280, y: 210, w: 120, h: 35, label: "Sub. Rec.Fisicos", sub: "1 plaza", type: "lnr", tematico: "desarrollo", plazas: 1, grado: 1 },
+      { id: "SUB-DES-TH", x: 420, y: 210, w: 120, h: 35, label: "Sub. Talento Hum.", sub: "1 plaza", type: "lnr", tematico: "desarrollo", plazas: 1, grado: 1 },
+      { id: "SUB-GOB", x: 600, y: 210, w: 150, h: 35, label: "Sub. Gobierno", sub: "1 plaza - Grado 01", type: "lnr", tematico: "desarrollo", plazas: 1, grado: 1 }
+    ],
+    edges: [
+      { from: "ALC", to: "SEC-PLA" },{ from: "ALC", to: "SEC-DES" },{ from: "ALC", to: "SEC-GOB" },
+      { from: "SEC-PLA", to: "SUB-PLA" },{ from: "SEC-DES", to: "SUB-DES-RF" },{ from: "SEC-DES", to: "SUB-DES-TH" },
+      { from: "SEC-GOB", to: "SUB-GOB" }
+    ]
+  },
+  "03": {
+    title: "Eje Economico - Hacienda, Agropecuaria, Transito, Cultura",
+    nodes: [
+      { id: "ALC", x: 450, y: 30, w: 200, h: 50, label: "ALCALDE", sub: "Despacho del Alcalde", type: "electivo", tematico: "electivo", plazas: 1 },
+      { id: "SEC-HAC", x: 40, y: 130, w: 170, h: 45, label: "Sec. Hacienda", sub: "Grado 03 - 1 plaza", type: "lnr", tematico: "economico", plazas: 1, grado: 3 },
+      { id: "SEC-AGR", x: 240, y: 130, w: 170, h: 45, label: "Sec. Agropecuaria", sub: "Grado 03 - 1 plaza", type: "lnr", tematico: "economico", plazas: 1, grado: 3 },
+      { id: "SEC-TRA", x: 440, y: 130, w: 170, h: 45, label: "Sec. Transito", sub: "Grado 03 - 1 plaza", type: "lnr", tematico: "economico", plazas: 1, grado: 3 },
+      { id: "SEC-CUL", x: 640, y: 130, w: 170, h: 45, label: "Sec. Cultura", sub: "Grado 03 - 1 plaza", type: "lnr", tematico: "economico", plazas: 1, grado: 3 },
+      { id: "SUB-HAC", x: 40, y: 210, w: 140, h: 35, label: "Sub. Hacienda", sub: "3 plazas - Grado 01", type: "lnr", tematico: "economico", plazas: 3, grado: 1 },
+      { id: "SUB-AGR", x: 240, y: 210, w: 140, h: 35, label: "Sub. Agropecuaria", sub: "1 plaza - Grado 01", type: "lnr", tematico: "economico", plazas: 1, grado: 1 },
+      { id: "SUB-TRA", x: 440, y: 210, w: 140, h: 35, label: "Sub. Transito", sub: "2 plazas - Grado 01", type: "lnr", tematico: "economico", plazas: 2, grado: 1 }
+    ],
+    edges: [
+      { from: "ALC", to: "SEC-HAC" },{ from: "ALC", to: "SEC-AGR" },{ from: "ALC", to: "SEC-TRA" },{ from: "ALC", to: "SEC-CUL" },
+      { from: "SEC-HAC", to: "SUB-HAC" },{ from: "SEC-AGR", to: "SUB-AGR" },{ from: "SEC-TRA", to: "SUB-TRA" }
+    ]
+  },
+  "04": {
+    title: "Infraestructura y Vivienda",
+    nodes: [
+      { id: "ALC", x: 350, y: 30, w: 200, h: 50, label: "ALCALDE", sub: "Despacho del Alcalde", type: "electivo", tematico: "electivo", plazas: 1 },
+      { id: "SEC-INF", x: 300, y: 130, w: 200, h: 45, label: "Sec. Infraestructura", sub: "Grado 03 - 1 plaza", type: "lnr", tematico: "infraestructura", plazas: 1, grado: 3 },
+      { id: "SUB-INF", x: 320, y: 210, w: 160, h: 35, label: "Sub. Infraestructura", sub: "2 plazas - Grado 01", type: "lnr", tematico: "infraestructura", plazas: 2, grado: 1 }
+    ],
+    edges: [{ from: "ALC", to: "SEC-INF" },{ from: "SEC-INF", to: "SUB-INF" }]
+  },
+  "05": {
+    title: "Entidades Descentralizadas",
+    nodes: [
+      { id: "ALC", x: 450, y: 30, w: 200, h: 50, label: "ALCALDE", sub: "Despacho del Alcalde", type: "electivo", tematico: "electivo", plazas: 1 },
+      { id: "IMDER-GER", x: 40, y: 130, w: 180, h: 45, label: "IMDER - Gerente", sub: "Est. Publico - LNR", type: "entidad", tematico: "entidad", plazas: 1, entidad: "IMDER" },
+      { id: "IMDESEPAL-DIR", x: 250, y: 130, w: 180, h: 45, label: "IMDESEPAL - Director", sub: "Est. Publico - LNR", type: "entidad", tematico: "entidad", plazas: 1, entidad: "IMDESEPAL" },
+      { id: "HROB-GER", x: 460, y: 130, w: 200, h: 45, label: "Hospital - Gerente", sub: "ESE - Periodo institucional", type: "entidad", tematico: "entidad", plazas: 1, entidad: "HROB" },
+      { id: "CDAP-GER", x: 690, y: 130, w: 200, h: 45, label: "CDAP - Gerente", sub: "Economia Mixta - LNR", type: "entidad", tematico: "entidad", plazas: 1, entidad: "CDAP" },
+      { id: "CORFE-GER", x: 150, y: 220, w: 180, h: 45, label: "CORFEPALMIRA - Gerente", sub: "Corporacion mixta", type: "entidad", tematico: "entidad", plazas: 1, entidad: "CORFEPALMIRA" },
+      { id: "AGUAS-GER", x: 550, y: 220, w: 200, h: 45, label: "Aguas Palmira - Gerente", sub: "SA ESP - 3 en nomina", type: "entidad", tematico: "entidad", plazas: 1, entidad: "AGUAS" },
+      { id: "IMDER-DET", x: 40, y: 310, w: 180, h: 60, label: "IMDER", sub: "Dir. Oper. Deportivo\nDir. Administrativo\nCoord. Metodologica", type: "carrera", tematico: "entidad", plazas: 0, entidad: "IMDER" },
+      { id: "IMDESEPAL-DET", x: 250, y: 310, w: 180, h: 60, label: "IMDESEPAL", sub: "Ejec. Contabilidad\nAdmin. Plazas\nApoyos (contratistas)", type: "carrera", tematico: "entidad", plazas: 0, entidad: "IMDESEPAL" },
+      { id: "HROB-DET", x: 460, y: 310, w: 200, h: 80, label: "Hospital HROB", sub: "Subgerencia Financiera\nSubgerencia Cientifica\nSubgerencia Administrativa\nOf. Planeacion\nControl Interno", type: "carrera", tematico: "entidad", plazas: 0, entidad: "HROB" },
+      { id: "CDAP-DET", x: 690, y: 310, w: 200, h: 80, label: "CDAP", sub: "Control Interno\nJefe Serv. Admin.\nJefe Financiero\nDirector Tecnico\nCoord. Calidad\nSistemas (24 aprob.)", type: "carrera", tematico: "entidad", plazas: 0, entidad: "CDAP" }
+    ],
+    edges: [
+      { from: "ALC", to: "IMDER-GER" },{ from: "ALC", to: "IMDESEPAL-DIR" },{ from: "ALC", to: "HROB-GER" },{ from: "ALC", to: "CDAP-GER" },
+      { from: "ALC", to: "CORFE-GER" },{ from: "ALC", to: "AGUAS-GER" },
+      { from: "IMDER-GER", to: "IMDER-DET" },{ from: "IMDESEPAL-DIR", to: "IMDESEPAL-DET" },
+      { from: "HROB-GER", to: "HROB-DET" },{ from: "CDAP-GER", to: "CDAP-DET" }
+    ]
+  },
+  "06": {
+    title: "Eje Constitucional - General, Juridica, Seguridad",
+    nodes: [
+      { id: "ALC", x: 350, y: 30, w: 200, h: 50, label: "ALCALDE", sub: "Despacho del Alcalde", type: "electivo", tematico: "electivo", plazas: 1 },
+      { id: "SEC-GEN", x: 80, y: 130, w: 180, h: 45, label: "Secretaria General", sub: "Grado 03 - 1 plaza", type: "lnr", tematico: "constitucional", plazas: 1, grado: 3 },
+      { id: "SEC-JUR", x: 310, y: 130, w: 180, h: 45, label: "Sec. Juridica", sub: "Grado 03 - 1 plaza", type: "lnr", tematico: "constitucional", plazas: 1, grado: 3 },
+      { id: "SEC-SEG", x: 540, y: 130, w: 180, h: 45, label: "Sec. Seguridad", sub: "Grado 03 - 1 plaza", type: "lnr", tematico: "constitucional", plazas: 1, grado: 3 }
+    ],
+    edges: [{ from: "ALC", to: "SEC-GEN" },{ from: "ALC", to: "SEC-JUR" },{ from: "ALC", to: "SEC-SEG" }]
+  }
+};
+
+// --- State ---
+let assignments = {};
+let savedLayouts = {};
+let currentView = "00";
+let editingNodeId = null;
+let dragState = { nodeId: null, offsetX: 0, offsetY: 0, isDragging: false, startX: 0, startY: 0 };
+
+function loadAssignments() { try { const s = localStorage.getItem(STORAGE_KEY); if (s) assignments = JSON.parse(s); } catch(e) { assignments = {}; } }
+function saveAssignments() { localStorage.setItem(STORAGE_KEY, JSON.stringify(assignments)); }
+function loadLayouts() { try { const s = localStorage.getItem(LAYOUT_KEY); if (s) savedLayouts = JSON.parse(s); } catch(e) { savedLayouts = {}; } }
+function saveLayouts() { localStorage.setItem(LAYOUT_KEY, JSON.stringify(savedLayouts)); }
+loadAssignments();
+loadLayouts();
+
+// Apply saved layouts to data
+function applySavedLayouts() {
+  Object.entries(savedLayouts).forEach(([viewId, layout]) => {
+    if (data[viewId]) {
+      layout.forEach(saved => {
+        const node = data[viewId].nodes.find(n => n.id === saved.id);
+        if (node) { node.x = saved.x; node.y = saved.y; }
+      });
+    }
+  });
+}
+applySavedLayouts();
+
+// --- Navigation ---
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const view = item.dataset.view;
+    if (view === 'summary') { toggleSummary(); return; }
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    item.classList.add('active');
+    currentView = view;
+    renderView(view);
+    document.getElementById('summary-panel').classList.remove('show');
+  });
+});
+
+function renderView(viewId) {
+  const view = data[viewId];
+  if (!view) return;
+  document.getElementById('view-title').textContent = view.title;
+  updateStats(view);
+  renderSVG(view);
+}
+
+function updateStats(view) {
+  let total = 0, asignados = 0;
+  view.nodes.forEach(n => {
+    if (n.type === 'lnr' || n.type === 'entidad') {
+      const plazas = n.plazas || 1;
+      total += plazas;
+      for (let i = 0; i < plazas; i++) {
+        const key = n.id + (plazas > 1 ? '_' + i : '');
+        if (assignments[key] && assignments[key].nombre) asignados++;
+      }
+    }
+  });
+  document.getElementById('stat-total').textContent = total;
+  document.getElementById('stat-asignados').textContent = asignados;
+  document.getElementById('stat-pendientes').textContent = total - asignados;
+}
+
+function renderSVG(view) {
+  const container = document.getElementById('svg-container');
+  const maxX = Math.max(...view.nodes.map(n => n.x + n.w)) + 60;
+  const maxY = Math.max(...view.nodes.map(n => n.y + n.h)) + 60;
+
+  let svg = `<svg width="${maxX}" height="${maxY}" viewBox="0 0 ${maxX} ${maxY}" xmlns="http://www.w3.org/2000/svg" id="org-svg">`;
+
+  // Edges with thematic colors
+  view.edges.forEach(e => {
+    const from = view.nodes.find(n => n.id === e.from);
+    const to = view.nodes.find(n => n.id === e.to);
+    if (!from || !to) return;
+    const x1 = from.x + from.w / 2, y1 = from.y + from.h;
+    const x2 = to.x + to.w / 2, y2 = to.y;
+    const my = (y1 + y2) / 2;
+    const edgeColor = TEMATIC_COLORS[to.tematico] || '#363a4e';
+    svg += `<path class="edge edge-thematic" stroke="${edgeColor}" d="M${x1},${y1} C${x1},${my} ${x2},${my} ${x2},${y2}"/>`;
+  });
+
+  // Nodes
+  view.nodes.forEach(n => {
+    const isEditable = n.type === 'lnr' || n.type === 'entidad';
+    const editableClass = isEditable ? 'editable' : '';
+    const clickHandler = isEditable ? `onclick="if(!dragState.isDragging) openModal('${n.id}')"` : '';
+
+    svg += `<g class="node" data-id="${n.id}" ${clickHandler}>`;
+    svg += `<rect class="node-rect ${editableClass}" data-tematico="${n.tematico}" x="${n.x}" y="${n.y}" width="${n.w}" height="${n.h}"/>`;
+    svg += `<text class="node-label" x="${n.x + n.w/2}" y="${n.y + 16}">${n.label}</text>`;
+    svg += `<text class="node-sublabel" x="${n.x + n.w/2}" y="${n.y + 28}">${n.sub}</text>`;
+
+    if (isEditable) {
+      const plazas = n.plazas || 1;
+      for (let i = 0; i < plazas; i++) {
+        const key = n.id + (plazas > 1 ? '_' + i : '');
+        const a = assignments[key];
+        const yPos = n.y + 38 + (i * 12);
+        if (a && a.nombre) {
+          svg += `<text class="node-person" x="${n.x + n.w/2}" y="${yPos}">${a.nombre}</text>`;
+          const sc = a.estado === 'confirmado' ? 'status-confirmado' : a.estado === 'pendiente' ? 'status-pendiente' : a.estado === 'reservado' ? 'status-reservado' : 'status-vacio';
+          svg += `<circle class="node-status ${sc}" cx="${n.x + n.w - 10}" cy="${n.y + 10}" r="4"/>`;
+        } else if (plazas > 1) {
+          svg += `<text class="node-sublabel" x="${n.x + n.w/2}" y="${yPos}">Plaza ${i+1}: Sin asignar</text>`;
+        }
+      }
+    }
+    svg += `</g>`;
+  });
+
+  svg += `</svg>`;
+  container.innerHTML = svg;
+
+  // Initialize drag after rendering
+  initDragAndDrop();
+}
+
+// --- Drag and Drop ---
+function initDragAndDrop() {
+  const svg = document.getElementById('org-svg');
+  if (!svg) return;
+
+  svg.querySelectorAll('.node').forEach(nodeEl => {
+    nodeEl.addEventListener('mousedown', handleDragStart);
+  });
+
+  svg.addEventListener('mousemove', handleDragMove);
+  svg.addEventListener('mouseup', handleDragEnd);
+  svg.addEventListener('mouseleave', handleDragEnd);
+}
+
+function handleDragStart(e) {
+  const nodeEl = e.currentTarget;
+  const nodeId = nodeEl.dataset.id;
+  const view = data[currentView];
+  const node = view.nodes.find(n => n.id === nodeId);
+  if (!node) return;
+
+  const svg = document.getElementById('org-svg');
+  const pt = svg.createSVGPoint();
+  pt.x = e.clientX;
+  pt.y = e.clientY;
+  const svgP = pt.matrixTransform(svg.getScreenCTM().inverse());
+
+  dragState = {
+    nodeId,
+    offsetX: svgP.x - node.x,
+    offsetY: svgP.y - node.y,
+    isDragging: false,
+    startX: e.clientX,
+    startY: e.clientY,
+    origX: node.x,
+    origY: node.y
+  };
+
+  nodeEl.classList.add('dragging');
+  e.preventDefault();
+}
+
+function handleDragMove(e) {
+  if (!dragState.nodeId) return;
+
+  const dx = Math.abs(e.clientX - dragState.startX);
+  const dy = Math.abs(e.clientY - dragState.startY);
+  if (dx > 5 || dy > 5) dragState.isDragging = true;
+  if (!dragState.isDragging) return;
+
+  const svg = document.getElementById('org-svg');
+  const pt = svg.createSVGPoint();
+  pt.x = e.clientX;
+  pt.y = e.clientY;
+  const svgP = pt.matrixTransform(svg.getScreenCTM().inverse());
+
+  const view = data[currentView];
+  const node = view.nodes.find(n => n.id === dragState.nodeId);
+  if (!node) return;
+
+  node.x = Math.max(0, svgP.x - dragState.offsetX);
+  node.y = Math.max(0, svgP.y - dragState.offsetY);
+
+  // Move children with parent
+  moveChildren(node, view);
+
+  renderSVG(view);
+}
+
+function moveChildren(parentNode, view) {
+  const children = view.nodes.filter(n => n.parent === parentNode.id);
+  const parentEdges = view.edges.filter(e => e.from === parentNode.id);
+  const childIds = parentEdges.map(e => e.to);
+
+  childIds.forEach(childId => {
+    const child = view.nodes.find(n => n.id === childId);
+    if (!child) return;
+    // Keep relative position
+    const idx = childIds.indexOf(childId);
+    const totalChildren = childIds.length;
+    const startX = parentNode.x + parentNode.w / 2 - (totalChildren * (child.w + 20)) / 2 + 10;
+    child.x = startX + idx * (child.w + 20);
+    child.y = parentNode.y + parentNode.h + 40;
+
+    // Recursively move grandchildren
+    moveChildren(child, view);
+  });
+}
+
+function handleDragEnd(e) {
+  if (dragState.nodeId) {
+    const nodeEl = document.querySelector(`[data-id="${dragState.nodeId}"]`);
+    if (nodeEl) nodeEl.classList.remove('dragging');
+
+    if (dragState.isDragging) {
+      // Save layout
+      const view = data[currentView];
+      savedLayouts[currentView] = view.nodes.map(n => ({ id: n.id, x: n.x, y: n.y }));
+      saveLayouts();
+
+      // Reorganize if dropped on different position
+      reorganizeLayout(dragState.nodeId);
+    }
+  }
+
+  setTimeout(() => { dragState = { nodeId: null, offsetX: 0, offsetY: 0, isDragging: false, startX: 0, startY: 0 }; }, 50);
+}
+
+function reorganizeLayout(nodeId) {
+  const view = data[currentView];
+  const node = view.nodes.find(n => n.id === nodeId);
+  if (!node) return;
+
+  // Find children and reposition them
+  const directChildren = view.edges.filter(e => e.from === nodeId).map(e => e.to);
+
+  if (directChildren.length > 0) {
+    const childNodes = directChildren.map(id => view.nodes.find(n => n.id === id)).filter(Boolean);
+    const totalWidth = childNodes.reduce((sum, c) => sum + c.w + 20, -20);
+    let currentX = node.x + node.w / 2 - totalWidth / 2;
+
+    childNodes.forEach(child => {
+      child.x = currentX;
+      child.y = node.y + node.h + 40;
+      currentX += child.w + 20;
+
+      // Recursively organize grandchildren
+      reorganizeLayout(child.id);
+    });
+
+    // Detect and resolve collisions
+    resolveCollisions(view);
+
+    // Save and re-render
+    savedLayouts[currentView] = view.nodes.map(n => ({ id: n.id, x: n.x, y: n.y }));
+    saveLayouts();
+    renderSVG(view);
+  }
+}
+
+function resolveCollisions(view) {
+  const levels = {};
+  view.nodes.forEach(n => {
+    const level = n.y;
+    if (!levels[level]) levels[level] = [];
+    levels[level].push(n);
+  });
+
+  Object.values(levels).forEach(levelNodes => {
+    levelNodes.sort((a, b) => a.x - b.x);
+    for (let i = 1; i < levelNodes.length; i++) {
+      const prev = levelNodes[i - 1];
+      const curr = levelNodes[i];
+      const minGap = 20;
+      if (curr.x < prev.x + prev.w + minGap) {
+        curr.x = prev.x + prev.w + minGap;
+      }
+    }
+  });
+}
+
+function resetLayout() {
+  if (!confirm('Restablecer posiciones originales de todos los organigramas?')) return;
+  delete savedLayouts[currentView];
+  saveLayouts();
+  // Reload original positions from the data definition
+  location.reload();
+}
+
+// --- Modal ---
+function openModal(nodeId) {
+  editingNodeId = nodeId;
+  const allNodes = Object.values(data).flatMap(v => v.nodes);
+  const node = allNodes.find(n => n.id === nodeId);
+  if (!node) return;
+
+  const plazas = node.plazas || 1;
+  let infoHTML = `<div class="info-row"><span class="info-label">Cargo</span><span class="info-val">${node.label}</span></div>`;
+  infoHTML += `<div class="info-row"><span class="info-label">Dependencia</span><span class="info-val">${node.sub}</span></div>`;
+  infoHTML += `<div class="info-row"><span class="info-label">Plazas</span><span class="info-val">${plazas}</span></div>`;
+  if (node.grado) infoHTML += `<div class="info-row"><span class="info-label">Grado</span><span class="info-val">${node.grado}</span></div>`;
+  if (node.norma) infoHTML += `<div class="info-row"><span class="info-label">Norma</span><span class="info-val">${node.norma}</span></div>`;
+  if (node.entidad) infoHTML += `<div class="info-row"><span class="info-label">Entidad</span><span class="info-val">${node.entidad}</span></div>`;
+
+  const tematicoLabel = { social: 'Eje Social', desarrollo: 'Eje Desarrollo', economico: 'Eje Economico', infraestructura: 'Infraestructura', constitucional: 'Eje Constitucional', entidad: 'Descentralizado', electivo: 'Electivo' };
+  infoHTML += `<div class="info-row"><span class="info-label">Eje</span><span class="info-val">${tematicoLabel[node.tematico] || node.tematico}</span></div>`;
+
+  if (plazas > 1) {
+    infoHTML += `<div class="form-group"><label>Seleccionar Plaza</label><select id="inp-plaza-idx" onchange="loadPlazaData()">`;
+    for (let i = 0; i < plazas; i++) infoHTML += `<option value="${i}">Plaza ${i+1}</option>`;
+    infoHTML += `</select></div>`;
+  }
+
+  document.getElementById('modal-info').innerHTML = infoHTML;
+  document.getElementById('modal-title').textContent = `Editar: ${node.label}`;
+  loadPlazaData();
+  document.getElementById('modal-overlay').classList.add('show');
+}
+
+function loadPlazaData() {
+  const allNodes = Object.values(data).flatMap(v => v.nodes);
+  const node = allNodes.find(n => n.id === editingNodeId);
+  if (!node) return;
+  const plazas = node.plazas || 1;
+  let idx = 0;
+  const sel = document.getElementById('inp-plaza-idx');
+  if (sel) idx = parseInt(sel.value);
+  const key = editingNodeId + (plazas > 1 ? '_' + idx : '');
+  const a = assignments[key] || {};
+  document.getElementById('inp-nombre').value = a.nombre || '';
+  document.getElementById('inp-padrino').value = a.padrino || '';
+  document.getElementById('inp-estado').value = a.estado || 'vacio';
+  document.getElementById('inp-notas').value = a.notas || '';
+}
+
+function saveAssignment() {
+  const allNodes = Object.values(data).flatMap(v => v.nodes);
+  const node = allNodes.find(n => n.id === editingNodeId);
+  if (!node) return;
+  const plazas = node.plazas || 1;
+  let idx = 0;
+  const sel = document.getElementById('inp-plaza-idx');
+  if (sel) idx = parseInt(sel.value);
+  const key = editingNodeId + (plazas > 1 ? '_' + idx : '');
+  assignments[key] = {
+    nombre: document.getElementById('inp-nombre').value,
+    padrino: document.getElementById('inp-padrino').value,
+    estado: document.getElementById('inp-estado').value,
+    notas: document.getElementById('inp-notas').value,
+    fecha: new Date().toISOString().split('T')[0]
+  };
+  saveAssignments();
+  closeModal();
+  renderView(currentView);
+  showToast('Asignacion guardada');
+}
+
+function clearAssignment() {
+  const allNodes = Object.values(data).flatMap(v => v.nodes);
+  const node = allNodes.find(n => n.id === editingNodeId);
+  if (!node) return;
+  const plazas = node.plazas || 1;
+  let idx = 0;
+  const sel = document.getElementById('inp-plaza-idx');
+  if (sel) idx = parseInt(sel.value);
+  const key = editingNodeId + (plazas > 1 ? '_' + idx : '');
+  delete assignments[key];
+  saveAssignments();
+  closeModal();
+  renderView(currentView);
+  showToast('Asignacion eliminada');
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('show');
+  editingNodeId = null;
+}
+
+// --- Summary ---
+function toggleSummary() {
+  const panel = document.getElementById('summary-panel');
+  panel.classList.toggle('show');
+  if (panel.classList.contains('show')) renderSummary();
+}
+
+function renderSummary() {
+  const body = document.getElementById('summary-body');
+  const allNodes = Object.values(data).flatMap(v => v.nodes);
+  const editableNodes = allNodes.filter(n => n.type === 'lnr' || n.type === 'entidad');
+  let html = '';
+  let total = 0, asignados = 0, pendientes = 0;
+
+  editableNodes.forEach(n => {
+    const plazas = n.plazas || 1;
+    for (let i = 0; i < plazas; i++) {
+      const key = n.id + (plazas > 1 ? '_' + i : '');
+      const a = assignments[key] || {};
+      const nombre = a.nombre || 'Sin asignar';
+      const estado = a.estado || 'vacio';
+      const padrino = a.padrino || '-';
+      const estadoLabel = estado === 'confirmado' ? 'Confirmado' : estado === 'pendiente' ? 'Pendiente' : estado === 'reservado' ? 'Reservado' : 'Sin asignar';
+      const estadoColor = estado === 'confirmado' ? 'var(--green)' : estado === 'pendiente' ? 'var(--yellow)' : estado === 'reservado' ? 'var(--orange)' : 'var(--text2)';
+      const tematicoColor = TEMATIC_COLORS[n.tematico] || '#666';
+      total++;
+      if (a.nombre) asignados++; else pendientes++;
+      const plazaLabel = plazas > 1 ? ` (Plaza ${i+1})` : '';
+      html += `<div class="summary-item">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <strong><span style="color:${tematicoColor}">&#9632;</span> ${n.label}${plazaLabel}</strong>
+          <span style="color:${estadoColor};font-size:11px">${estadoLabel}</span>
+        </div>
+        <div style="color:var(--text2);font-size:11px;margin-top:2px">Persona: ${nombre} | Padrino: ${padrino}</div>
+      </div>`;
+    }
+  });
+
+  body.innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px;text-align:center">
+      <div style="background:var(--bg3);padding:8px;border-radius:6px"><div style="font-size:20px;color:var(--accent)">${total}</div><div style="font-size:10px;color:var(--text2)">Total</div></div>
+      <div style="background:var(--bg3);padding:8px;border-radius:6px"><div style="font-size:20px;color:var(--green)">${asignados}</div><div style="font-size:10px;color:var(--text2)">Asignados</div></div>
+      <div style="background:var(--bg3);padding:8px;border-radius:6px"><div style="font-size:20px;color:var(--yellow)">${pendientes}</div><div style="font-size:10px;color:var(--text2)">Pendientes</div></div>
+    </div>
+    ${html}`;
+}
+
+// --- Export ---
+function exportToExcel() {
+  if (typeof XLSX === 'undefined') { showToast('Libreria Excel no cargada'); return; }
+  const rows = [['ID', 'Cargo', 'Dependencia', 'Eje Tematico', 'Tipo', 'Plazas', 'Grado', 'Norma', 'Plaza #', 'Nombre Asignado', 'Padrino', 'Estado', 'Notas', 'Fecha']];
+  const viewOrder = ['00','01','02','03','04','05','06'];
+  viewOrder.forEach(vid => {
+    const view = data[vid];
+    if (!view) return;
+    view.nodes.forEach(n => {
+      if (n.type !== 'lnr' && n.type !== 'entidad') return;
+      const plazas = n.plazas || 1;
+      for (let i = 0; i < plazas; i++) {
+        const key = n.id + (plazas > 1 ? '_' + i : '');
+        const a = assignments[key] || {};
+        rows.push([n.id, n.label, n.sub, n.tematico, n.type, plazas, n.grado || '', n.norma || '', plazas > 1 ? i+1 : 1, a.nombre || '', a.padrino || '', a.estado || 'vacio', a.notas || '', a.fecha || '']);
+      }
+    });
+  });
+  const ws = XLSX.utils.aoa_to_sheet(rows);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'ElBus_palmira');
+  XLSX.writeFile(wb, 'ElBus_palmira_Matriz.xlsx');
+  showToast('Excel exportado');
+}
+
+function importData() {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.json';
+  input.onchange = e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      try {
+        Object.assign(assignments, JSON.parse(ev.target.result));
+        saveAssignments();
+        renderView(currentView);
+        showToast('Datos importados');
+      } catch(err) { showToast('Error al importar'); }
+    };
+    reader.readAsText(file);
+  };
+  input.click();
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+renderView('00');
+</script>
+</body>
+</html>

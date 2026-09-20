@@ -1,0 +1,348 @@
+{
+  "proyecto": "ElBus_palmira",
+  "fecha_generacion": "2026-09-20",
+  "fuente": "Matriz_Maestra_Estructura_Institucional_Palmira_2026.xlsx",
+  "total_plazas_lnr": 42,
+  "estructura": {
+    "nivel_0": {
+      "id": "ALC",
+      "cargo": "Alcalde",
+      "dependencia": "Despacho del Alcalde",
+      "grado": 4,
+      "regimen": "Electivo",
+      "plazas": 1,
+      "norma": "Decreto 334/2022 + modificaciones",
+      "bloque": "administracion_central",
+      "tematico": "constitucional"
+    },
+    "nivel_1_secretarias": [
+      {
+        "id": "SEC-GEN",
+        "cargo": "Secretario de Despacho",
+        "dependencia": "Secretaría General",
+        "grado": 3,
+        "regimen": "LNR",
+        "plazas": 1,
+        "norma": "Decreto 334/2022",
+        "bloque": "administracion_central",
+        "tematico": "constitucional",
+        "subsecretarias": []
+      },
+      {
+        "id": "SEC-HAC",
+        "cargo": "Secretario de Despacho",
+        "dependencia": "Secretaría de Hacienda",
+        "grado": 3,
+        "regimen": "LNR",
+        "plazas": 1,
+        "norma": "Decreto 334/2022",
+        "bloque": "administracion_central",
+        "tematico": "economico",
+        "subsecretarias": [
+          {
+            "id": "SUB-HAC-01",
+            "cargo": "Subsecretaría",
+            "dependencia": "Secretaría de Hacienda",
+            "grado": 1,
+            "regimen": "LNR",
+            "plazas": 3,
+            "norma": "Decreto 334/2022"
+          }
+        ]
+      },
+      {
+        "id": "SEC-PLA",
+        "cargo": "Secretario de Despacho",
+        "dependencia": "Secretaría de Planeación",
+        "grado": 3,
+        "regimen": "LNR",
+        "plazas": 1,
+        "norma": "Decreto 334/2022",
+        "bloque": "administracion_central",
+        "tematico": "desarrollo",
+        "subsecretarias": [
+          {
+            "id": "SUB-PLA-01",
+            "cargo": "Subsecretaría",
+            "dependencia": "Secretaría de Planeación",
+            "grado": 1,
+            "regimen": "LNR",
+            "plazas": 2,
+            "norma": "Decreto 334/2022"
+          }
+        ]
+      },
+      {
+        "id": "SEC-GOB",
+        "cargo": "Secretario de Despacho",
+        "dependencia": "Secretaría de Gobierno",
+        "grado": 3,
+        "regimen": "LNR",
+        "plazas": 1,
+        "norma": "Decreto 334/2022",
+        "bloque": "administracion_central",
+        "tematico": "desarrollo",
+        "subsecretarias": [
+          {
+            "id": "SUB-GOB-01",
+            "cargo": "Subsecretaría",
+            "dependencia": "Secretaría de Gobierno",
+            "grado": 1,
+            "regimen": "LNR",
+            "plazas": 1,
+            "norma": "Decreto 334/2022"
+          }
+        ]
+      },
+      {
+        "id": "SEC-SEG",
+        "cargo": "Secretario de Despacho",
+        "dependencia": "Secretaría de Seguridad y Convivencia",
+        "grado": 3,
+        "regimen": "LNR",
+        "plazas": 1,
+        "norma": "Decreto 334/2022",
+        "bloque": "administracion_central",
+        "tematico": "constitucional",
+        "subsecretarias": []
+      },
+      {
+        "id": "SEC-PAR",
+        "cargo": "Secretario de Despacho",
+        "dependencia": "Secretaría de Participación Comunitaria",
+        "grado": 3,
+        "regimen": "LNR",
+        "plazas": 1,
+        "norma": "Decreto 334/2022",
+        "bloque": "administracion_central",
+        "tematico": "social",
+        "subsecretarias": []
+      },
+      {
+        "id": "SEC-DES",
+        "cargo": "Secretario de Despacho",
+        "dependencia": "Secretaría de Desarrollo Institucional",
+        "grado": 3,
+        "regimen": "LNR",
+        "plazas": 1,
+        "norma": "Decreto 334/2022",
+        "bloque": "administracion_central",
+        "tematico": "desarrollo",
+        "subsecretarias": [
+          {
+            "id": "SUB-DES-RF",
+            "cargo": "Subsecretaría Gestión de Recursos Físicos",
+            "dependencia": "Secretaría de Desarrollo Institucional",
+            "grado": 1,
+            "regimen": "LNR",
+            "plazas": 1,
+            "norma": "Decreto 334/2022"
+          },
+          {
+            "id": "SUB-DES-TH",
+            "cargo": "Subsecretaría Gestión de Talento Humano",
+            "dependencia": "Secretaría de Desarrollo Institucional",
+            "grado": 1,
+            "regimen": "LNR",
+            "plazas": 1,
+            "norma": "Decreto 334/2022"
+          }
+        ]
+      },
+      {
+        "id": "SEC-JUR",
+        "cargo": "Secretario de Despacho",
+        "dependencia": "Secretaría Jurídica",
+        "grado": 3,
+        "regimen": "LNR",
+        "plazas": 1,
+        "norma": "Decreto 334/2022",
+        "bloque": "administracion_central",
+        "tematico": "constitucional",
+        "subsecretarias": []
+      },
+      {
+        "id": "SEC-INF",
+        "cargo": "Secretario de Despacho",
+        "dependencia": "Secretaría de Infraestructura, Renovación Urbana y Vivienda",
+        "grado": 3,
+        "regimen": "LNR",
+        "plazas": 1,
+        "norma": "Decreto 334/2022",
+        "bloque": "administracion_central",
+        "tematico": "infraestructura",
+        "subsecretarias": [
+          {
+            "id": "SUB-INF-01",
+            "cargo": "Subsecretaría",
+            "dependencia": "Secretaría de Infraestructura",
+            "grado": 1,
+            "regimen": "LNR",
+            "plazas": 2,
+            "norma": "Decreto 334/2022"
+          }
+        ]
+      },
+      {
+        "id": "SEC-CUL",
+        "cargo": "Secretario de Despacho",
+        "dependencia": "Secretaría de Cultura",
+        "grado": 3,
+        "regimen": "LNR",
+        "plazas": 1,
+        "norma": "Decreto 334/2022",
+        "bloque": "administracion_central",
+        "tematico": "economico",
+        "subsecretarias": []
+      },
+      {
+        "id": "SEC-EDU",
+        "cargo": "Secretario de Despacho",
+        "dependencia": "Secretaría de Educación",
+        "grado": 3,
+        "regimen": "LNR",
+        "plazas": 1,
+        "norma": "Decreto 334/2022",
+        "bloque": "administracion_central",
+        "tematico": "social",
+        "subsecretarias": [
+          {
+            "id": "SUB-EDU-01",
+            "cargo": "Subsecretaría",
+            "dependencia": "Secretaría de Educación",
+            "grado": 1,
+            "regimen": "LNR",
+            "plazas": 3,
+            "norma": "Decreto 334/2022"
+          }
+        ]
+      },
+      {
+        "id": "SEC-SAL",
+        "cargo": "Secretario de Despacho",
+        "dependencia": "Secretaría de Salud",
+        "grado": 3,
+        "regimen": "LNR",
+        "plazas": 1,
+        "norma": "Decreto 334/2022",
+        "bloque": "administracion_central",
+        "tematico": "social",
+        "subsecretarias": [
+          {
+            "id": "SUB-SAL-01",
+            "cargo": "Subsecretaría",
+            "dependencia": "Secretaría de Salud",
+            "grado": 1,
+            "regimen": "LNR",
+            "plazas": 2,
+            "norma": "Decreto 334/2022"
+          }
+        ]
+      },
+      {
+        "id": "SEC-AGR",
+        "cargo": "Secretario de Despacho",
+        "dependencia": "Secretaría Agropecuaria y de Desarrollo Rural",
+        "grado": 3,
+        "regimen": "LNR",
+        "plazas": 1,
+        "norma": "Decreto 334/2022",
+        "bloque": "administracion_central",
+        "tematico": "economico",
+        "subsecretarias": [
+          {
+            "id": "SUB-AGR-01",
+            "cargo": "Subsecretaría",
+            "dependencia": "Secretaría Agropecuaria",
+            "grado": 1,
+            "regimen": "LNR",
+            "plazas": 1,
+            "norma": "Decreto 334/2022"
+          }
+        ]
+      },
+      {
+        "id": "SEC-INS",
+        "cargo": "Secretario de Despacho",
+        "dependencia": "Secretaría de Integración Social",
+        "grado": 3,
+        "regimen": "LNR",
+        "plazas": 1,
+        "norma": "Decreto 334/2022",
+        "bloque": "administracion_central",
+        "tematico": "social",
+        "subsecretarias": [
+          {
+            "id": "SUB-INS-01",
+            "cargo": "Subsecretaría",
+            "dependencia": "Secretaría de Integración Social",
+            "grado": 1,
+            "regimen": "LNR",
+            "plazas": 2,
+            "norma": "Decreto 334/2022"
+          }
+        ]
+      },
+      {
+        "id": "SEC-TRA",
+        "cargo": "Secretario de Despacho",
+        "dependencia": "Secretaría de Tránsito y Transporte",
+        "grado": 3,
+        "regimen": "LNR",
+        "plazas": 1,
+        "norma": "Decreto 334/2022",
+        "bloque": "administracion_central",
+        "tematico": "economico",
+        "subsecretarias": [
+          {
+            "id": "SUB-TRA-01",
+            "cargo": "Subsecretaría",
+            "dependencia": "Secretaría de Tránsito y Transporte",
+            "grado": 1,
+            "regimen": "LNR",
+            "plazas": 2,
+            "norma": "Decreto 334/2022"
+          }
+        ]
+      }
+    ],
+    "nivel_1_direcciones": {
+      "id": "DIR-GRAL",
+      "cargo": "Direcciones",
+      "dependencia": "Direcciones y oficinas",
+      "grado": 1,
+      "regimen": "LNR",
+      "plazas": 7,
+      "norma": "Decreto 334/2022 + modificaciones",
+      "bloque": "administracion_central",
+      "tematico": "desarrollo"
+    }
+  },
+  "tematicos": {
+    "social": {
+      "nombre": "Eje Social",
+      "secretarias": ["SEC-PAR", "SEC-EDU", "SEC-SAL", "SEC-INS"],
+      "plazas_lnr": 8
+    },
+    "desarrollo": {
+      "nombre": "Eje Desarrollo",
+      "secretarias": ["SEC-PLA", "SEC-DES", "SEC-GOB"],
+      "plazas_lnr": 8
+    },
+    "economico": {
+      "nombre": "Eje Económico",
+      "secretarias": ["SEC-HAC", "SEC-AGR", "SEC-TRA", "SEC-CUL"],
+      "plazas_lnr": 10
+    },
+    "infraestructura": {
+      "nombre": "Infraestructura",
+      "secretarias": ["SEC-INF"],
+      "plazas_lnr": 3
+    },
+    "constitucional": {
+      "nombre": "Eje Constitucional",
+      "secretarias": ["SEC-GEN", "SEC-JUR", "SEC-SEG"],
+      "plazas_lnr": 3
+    }
+  }
+}

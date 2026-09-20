@@ -1,0 +1,5 @@
+node_modules/
+*.log
+desktop.ini
+.DS_Store
+Thumbs.db
