@@ -17,6 +17,7 @@
   --t-infraestructura-bg: #2a2a1a; --t-infraestructura-border: #f1c40f;
   --t-constitucional-bg: #3a1a1a; --t-constitucional-border: #e74c3c;
   --t-entidad-bg: #1a3a3a; --t-entidad-border: #1abc9c;
+  --t-despacho-bg: #3a1a2a; --t-despacho-border: #ff4d8d;
 }
 * { margin:0; padding:0; box-sizing:border-box; }
 body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); overflow: hidden; height: 100vh; user-select: none; }
@@ -60,6 +61,7 @@ body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); co
 .node-rect[data-tematico="infraestructura"] { fill: var(--t-infraestructura-bg); stroke: var(--t-infraestructura-border); }
 .node-rect[data-tematico="constitucional"] { fill: var(--t-constitucional-bg); stroke: var(--t-constitucional-border); }
 .node-rect[data-tematico="entidad"] { fill: var(--t-entidad-bg); stroke: var(--t-entidad-border); }
+.node-rect[data-tematico="despacho"] { fill: var(--t-despacho-bg); stroke: var(--t-despacho-border); }
 .node-rect.editable { stroke-dasharray: 6,3; }
 .node-rect.has-vacantes { stroke: var(--red); stroke-dasharray: 4,2; stroke-width: 2.5; }
 .node-label { font-size: 11px; fill: var(--text); text-anchor: middle; font-weight: 600; pointer-events: none; }
@@ -119,6 +121,7 @@ body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); co
       <div class="nav-section">Vista General</div>
       <div class="nav-item active" data-view="00"><div class="dot" style="background:var(--accent)"></div>Organigrama Completo<span class="badge">43</span></div>
       <div class="nav-section">Ejes Tematicos</div>
+      <div class="nav-item" data-view="08"><div class="dot" style="background:var(--t-despacho-border)"></div>Despacho del Alcalde<span class="badge">8</span></div>
       <div class="nav-item" data-view="01"><div class="dot" style="background:var(--t-social-border)"></div>Eje Social<span class="badge">9</span></div>
       <div class="nav-item" data-view="02"><div class="dot" style="background:var(--t-desarrollo-border)"></div>Eje Desarrollo<span class="badge">8</span></div>
       <div class="nav-item" data-view="03"><div class="dot" style="background:var(--t-economico-border)"></div>Eje Economico<span class="badge">10</span></div>
@@ -180,6 +183,7 @@ body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); co
 <div class="legend">
   <div class="legend-title">Ejes Tematicos</div>
   <div class="legend-item"><div class="legend-color" style="background:var(--t-electivo-bg);border:2px solid var(--t-electivo-border)"></div> Alcalde (Electivo)</div>
+  <div class="legend-item"><div class="legend-color" style="background:var(--t-despacho-bg);border:2px solid var(--t-despacho-border)"></div> Despacho del Alcalde</div>
   <div class="legend-item"><div class="legend-color" style="background:var(--t-social-bg);border:2px solid var(--t-social-border)"></div> Eje Social</div>
   <div class="legend-item"><div class="legend-color" style="background:var(--t-desarrollo-bg);border:2px solid var(--t-desarrollo-border)"></div> Eje Desarrollo</div>
   <div class="legend-item"><div class="legend-color" style="background:var(--t-economico-bg);border:2px solid var(--t-economico-border)"></div> Eje Economico</div>
@@ -202,11 +206,11 @@ const LAYOUT_KEY = 'ElBus_palmira_v2_layouts';
 
 const TEMATIC_COLORS = {
   electivo: '#2ecc71', social: '#9b59b6', desarrollo: '#3498db',
-  economico: '#e67e22', infraestructura: '#f1c40f', constitucional: '#e74c3c', entidad: '#1abc9c'
+  economico: '#e67e22', infraestructura: '#f1c40f', constitucional: '#e74c3c', entidad: '#1abc9c', despacho: '#ff4d8d'
 };
 const TEMATIC_LABELS = {
   electivo: 'Alcalde', social: 'Eje Social', desarrollo: 'Eje Desarrollo',
-  economico: 'Eje Economico', infraestructura: 'Infraestructura', constitucional: 'Constitucional', entidad: 'Descentralizado'
+  economico: 'Eje Economico', infraestructura: 'Infraestructura', constitucional: 'Constitucional', entidad: 'Descentralizado', despacho: 'Despacho del Alcalde'
 };
 
 // ===== DATA V2 =====
@@ -218,14 +222,14 @@ const data = {
     ],
     nodes: [
       { id:"ALC", x:710, y:48, w:220, h:60, label:"ALCALDE", sub:"Victor Manuel Ramos Vergara - 60 cargos", type:"electivo", tematico:"electivo", responsable:"Victor Manuel Ramos Vergara", grado:4, codigo:5, vacantes:0, certeza:"Oficial 2026" },
-      { id:"DIR-CI", x:410, y:170, w:190, h:55, label:"Control Interno", sub:"Eliana Corral Aramburo", type:"lnr", tematico:"constitucional", responsable:"Eliana Corral Aramburo", vacantes:0, parent:"ALC" },
-      { id:"DIR-CID", x:620, y:170, w:190, h:55, label:"Control Interno Discip.", sub:"Alba Lucia Romero Pinzon", type:"lnr", tematico:"constitucional", responsable:"Alba Lucia Romero Pinzon", vacantes:0, parent:"ALC" },
-      { id:"DIR-COM", x:830, y:170, w:190, h:55, label:"Comunicaciones", sub:"Carlos Andres Arias", type:"lnr", tematico:"desarrollo", responsable:"Carlos Andres Arias", vacantes:0, parent:"ALC" },
-      { id:"DIR-TIC", x:1040, y:170, w:190, h:55, label:"Tecnologia e Innovacion", sub:"Mauricio Hormaza", type:"lnr", tematico:"desarrollo", responsable:"Mauricio Hormaza", vacantes:0, parent:"ALC" },
-      { id:"DIR-CON", x:410, y:248, w:190, h:55, label:"Contratacion Publica", sub:"Olmedo de Jesus Ortiz Acevedo", type:"lnr", tematico:"economico", responsable:"Olmedo de Jesus Ortiz Acevedo", vacantes:0, parent:"ALC" },
-      { id:"DIR-EMP", x:620, y:248, w:190, h:55, label:"Emprendimiento", sub:"Elizabeth Roman", type:"lnr", tematico:"economico", responsable:"Elizabeth Roman", vacantes:0, parent:"ALC" },
-      { id:"DIR-GRD", x:830, y:248, w:190, h:55, label:"Gestion del Riesgo", sub:"Abelardo Angulo Cabezas", type:"lnr", tematico:"infraestructura", responsable:"Abelardo Angulo Cabezas", vacantes:0, parent:"ALC" },
-      { id:"DIR-MAM", x:1040, y:248, w:190, h:55, label:"Medio Ambiente", sub:"Patricia Munoz Munoz", type:"lnr", tematico:"infraestructura", responsable:"Patricia Munoz Munoz", vacantes:0, parent:"ALC" },
+      { id:"DIR-CI", x:410, y:170, w:190, h:55, label:"Control Interno", sub:"Eliana Corral Aramburo", type:"lnr", tematico:"despacho", responsable:"Eliana Corral Aramburo", vacantes:0, parent:"ALC" },
+      { id:"DIR-CID", x:620, y:170, w:190, h:55, label:"Control Interno Discip.", sub:"Alba Lucia Romero Pinzon", type:"lnr", tematico:"despacho", responsable:"Alba Lucia Romero Pinzon", vacantes:0, parent:"ALC" },
+      { id:"DIR-COM", x:830, y:170, w:190, h:55, label:"Comunicaciones", sub:"Carlos Andres Arias", type:"lnr", tematico:"despacho", responsable:"Carlos Andres Arias", vacantes:0, parent:"ALC" },
+      { id:"DIR-TIC", x:1040, y:170, w:190, h:55, label:"Tecnologia e Innovacion", sub:"Mauricio Hormaza", type:"lnr", tematico:"despacho", responsable:"Mauricio Hormaza", vacantes:0, parent:"ALC" },
+      { id:"DIR-CON", x:410, y:248, w:190, h:55, label:"Contratacion Publica", sub:"Olmedo de Jesus Ortiz Acevedo", type:"lnr", tematico:"despacho", responsable:"Olmedo de Jesus Ortiz Acevedo", vacantes:0, parent:"ALC" },
+      { id:"DIR-EMP", x:620, y:248, w:190, h:55, label:"Emprendimiento", sub:"Elizabeth Roman", type:"lnr", tematico:"despacho", responsable:"Elizabeth Roman", vacantes:0, parent:"ALC" },
+      { id:"DIR-GRD", x:830, y:248, w:190, h:55, label:"Gestion del Riesgo", sub:"Abelardo Angulo Cabezas", type:"lnr", tematico:"despacho", responsable:"Abelardo Angulo Cabezas", vacantes:0, parent:"ALC" },
+      { id:"DIR-MAM", x:1040, y:248, w:190, h:55, label:"Medio Ambiente", sub:"Patricia Munoz Munoz", type:"lnr", tematico:"despacho", responsable:"Patricia Munoz Munoz", vacantes:0, parent:"ALC" },
       { id:"SEC-GEN", x:60, y:400, w:200, h:60, label:"Secretaria General", sub:"Grace Velez Millon - Grado 03", type:"lnr", tematico:"constitucional", responsable:"Grace Velez Millon", grado:3, codigo:20, vacantes:0, certeza:"Oficial 2026" },
       { id:"SEC-GOB", x:290, y:400, w:200, h:60, label:"Sec. Gobierno", sub:"Ricardo Caicedo Quintero - Grado 03", type:"lnr", tematico:"desarrollo", responsable:"Ricardo Caicedo Quintero", grado:3, codigo:20, vacantes:1, certeza:"Oficial 2026" },
       { id:"SEC-JUR", x:520, y:400, w:200, h:60, label:"Sec. Juridica", sub:"Jorge Eliecer Corral - Grado 03", type:"lnr", tematico:"constitucional", responsable:"Jorge Eliecer Corral Aramburo", grado:3, codigo:20, vacantes:3, certeza:"Oficial 2026" },
@@ -286,6 +290,7 @@ const data = {
 function buildThematicViews() {
   const main = data["00"];
   const groups = {
+    "08": { title: "Despacho del Alcalde", tematicos: ["electivo","despacho"] },
     "01": { title: "Eje Social", tematicos: ["electivo","social"] },
     "02": { title: "Eje Desarrollo", tematicos: ["electivo","desarrollo"] },
     "03": { title: "Eje Economico", tematicos: ["electivo","economico"] },
@@ -301,6 +306,7 @@ function buildThematicViews() {
   });
 }
 buildThematicViews();
+data["08"].groups = [{ id:"G-DESPACHO", label:"DESPACHO DEL ALCALDE", x:390, y:28, w:890, h:300 }];
 
 // Descentralizados view
 data["05"] = {
