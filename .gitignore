@@ -3,3 +3,5 @@ node_modules/
 desktop.ini
 .DS_Store
 Thumbs.db
+deploy.py
+deploy.sh
