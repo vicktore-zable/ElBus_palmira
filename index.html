@@ -134,6 +134,7 @@ body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); co
       <div class="nav-item" data-view="summary">Resumen Asignaciones</div>
     </div>
     <div class="sidebar-footer">
+      <button class="btn btn-primary" onclick="autoLayoutCurrent()">Reacomodar</button>
       <button class="btn" onclick="exportToExcel()">Exportar Excel</button>
       <button class="btn" onclick="importData()">Importar</button>
       <button class="btn btn-danger" onclick="resetLayout()">Reset Layout</button>
@@ -203,6 +204,7 @@ body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); co
 <script>
 const STORAGE_KEY = 'ElBus_palmira_v2_asignaciones';
 const LAYOUT_KEY = 'ElBus_palmira_v2_layouts';
+const NOGROUP_KEY = 'ElBus_palmira_v2_nogroups';
 
 const TEMATIC_COLORS = {
   electivo: '#2ecc71', social: '#9b59b6', desarrollo: '#3498db',
@@ -358,12 +360,16 @@ function loadAssignments() { try { const s = localStorage.getItem(STORAGE_KEY); 
 function saveAssignments() { localStorage.setItem(STORAGE_KEY, JSON.stringify(assignments)); }
 function loadLayouts() { try { const s = localStorage.getItem(LAYOUT_KEY); if (s) savedLayouts = JSON.parse(s); } catch(e) { savedLayouts = {}; } }
 function saveLayouts() { localStorage.setItem(LAYOUT_KEY, JSON.stringify(savedLayouts)); }
-loadAssignments(); loadLayouts();
+let noGroupViews = {};
+function loadNoGroups() { try { const s = localStorage.getItem(NOGROUP_KEY); if (s) noGroupViews = JSON.parse(s); } catch(e) { noGroupViews = {}; } }
+function saveNoGroups() { localStorage.setItem(NOGROUP_KEY, JSON.stringify(noGroupViews)); }
+loadAssignments(); loadLayouts(); loadNoGroups();
 
 function applySavedLayouts() {
   Object.entries(savedLayouts).forEach(([viewId, layout]) => {
     if (data[viewId]) layout.forEach(s => { const n = data[viewId].nodes.find(x => x.id === s.id); if (n) { n.x = s.x; n.y = s.y; } });
   });
+  Object.keys(noGroupViews).forEach(viewId => { if (data[viewId] && noGroupViews[viewId]) data[viewId].groups = undefined; });
 }
 applySavedLayouts();
 
@@ -574,7 +580,52 @@ function resolveCollisions(view) {
 function resetLayout() {
   if (!confirm('Restablecer posiciones originales?')) return;
   delete savedLayouts[currentView]; saveLayouts();
+  delete noGroupViews[currentView]; saveNoGroups();
   location.reload();
+}
+
+function autoLayoutCurrent() {
+  const view = data[currentView];
+  if (!view || !view.nodes || view.nodes.length === 0) return;
+
+  const GAP_X = 26, GAP_Y = 48, MARGIN = 40;
+  const childMap = {}, parentMap = {}, nodeById = {};
+  view.nodes.forEach(n => { childMap[n.id] = []; nodeById[n.id] = n; });
+  view.edges.forEach(e => { if (childMap[e.from]) childMap[e.from].push(e.to); parentMap[e.to] = e.from; });
+  const roots = view.nodes.filter(n => !parentMap[n.id]);
+
+  if (roots.length === 0) { showToast('No se detecto estructura jerarquica'); return; }
+
+  function subW(id) {
+    const kids = childMap[id] || [];
+    if (!kids.length) return nodeById[id].w;
+    const s = kids.reduce((a, c) => a + subW(c) + GAP_X, 0);
+    return Math.max(nodeById[id].w, s - GAP_X);
+  }
+  function layout(id, left, y) {
+    const n = nodeById[id];
+    const kids = childMap[id] || [];
+    if (!kids.length) { n.x = left; n.y = y; return left + n.w; }
+    const childY = y + n.h + GAP_Y;
+    let cursor = left;
+    kids.forEach(c => { cursor = layout(c, cursor, childY) + GAP_X; });
+    const totalW = cursor - GAP_X - left;
+    n.x = left + totalW / 2 - n.w / 2;
+    n.y = y;
+    return cursor - GAP_X;
+  }
+
+  let cursor = MARGIN;
+  roots.forEach(r => { cursor = layout(r, cursor, MARGIN) + GAP_X; });
+
+  view.groups = undefined;
+  noGroupViews[currentView] = true;
+  saveNoGroups();
+
+  savedLayouts[currentView] = view.nodes.map(n => ({ id: n.id, x: n.x, y: n.y }));
+  saveLayouts();
+  renderSVG(view);
+  showToast('Layout reorganizado');
 }
 
 // ===== Modal =====
