@@ -70,6 +70,8 @@ body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); co
 .node-vacante { font-size: 8px; fill: var(--red); text-anchor: middle; font-weight: 700; pointer-events: none; }
 .node-status { font-size: 8px; text-anchor: middle; pointer-events: none; }
 .edge { stroke: var(--border); stroke-width: 1.5; fill: none; }
+.group-rect { fill: none; stroke: var(--accent); stroke-width: 1.5; stroke-dasharray: 8,4; rx: 14; ry: 14; }
+.group-label { font-size: 13px; fill: var(--accent); font-weight: 700; letter-spacing: 1px; text-anchor: middle; pointer-events: none; }
 .status-pendiente { fill: var(--yellow); }
 .status-confirmado { fill: var(--green); }
 .status-reservado { fill: var(--orange); }
@@ -211,50 +213,53 @@ const TEMATIC_LABELS = {
 const data = {
   "00": {
     title: "Organigrama Completo - 43 nodos LNR + 28 subdependencias",
+    groups: [
+      { id:"G-DESPACHO", label:"DESPACHO DEL ALCALDE", x:390, y:28, w:890, h:300 }
+    ],
     nodes: [
-      { id:"ALC", x:700, y:20, w:220, h:60, label:"ALCALDE", sub:"Despacho del Alcalde - 60 cargos", type:"electivo", tematico:"electivo", responsable:"Victor Manuel Ramos Vergara", grado:4, codigo:5, vacantes:0, certeza:"Oficial 2026" },
-      { id:"DIR-CI", x:120, y:120, w:180, h:55, label:"Control Interno", sub:"Direccion", type:"lnr", tematico:"constitucional", responsable:"Eliana Corral Aramburo", vacantes:0 },
-      { id:"DIR-CID", x:320, y:120, w:180, h:55, label:"Control Interno Discip.", sub:"Direccion", type:"lnr", tematico:"constitucional", responsable:"Alba Lucia Romero Pinzon", vacantes:0 },
-      { id:"DIR-COM", x:520, y:120, w:180, h:55, label:"Comunicaciones", sub:"Direccion", type:"lnr", tematico:"desarrollo", responsable:"Carlos Andres Arias", vacantes:0 },
-      { id:"DIR-TIC", x:720, y:120, w:180, h:55, label:"Tecnologia e Innovacion", sub:"Direccion", type:"lnr", tematico:"desarrollo", responsable:"Mauricio Hormaza", vacantes:0 },
-      { id:"DIR-CON", x:920, y:120, w:180, h:55, label:"Contratacion Publica", sub:"Direccion", type:"lnr", tematico:"economico", responsable:"Olmedo de Jesus Ortiz Acevedo", vacantes:0 },
-      { id:"DIR-EMP", x:1120, y:120, w:180, h:55, label:"Emprendimiento", sub:"Direccion", type:"lnr", tematico:"economico", responsable:"Elizabeth Roman", vacantes:0 },
-      { id:"DIR-GRD", x:1320, y:120, w:180, h:55, label:"Gestion del Riesgo", sub:"Direccion", type:"lnr", tematico:"infraestructura", responsable:"Abelardo Angulo Cabezas", vacantes:0 },
-      { id:"DIR-MAM", x:1520, y:120, w:180, h:55, label:"Medio Ambiente", sub:"Direccion", type:"lnr", tematico:"infraestructura", responsable:"Patricia Munoz Munoz", vacantes:0 },
-      { id:"SEC-GEN", x:60, y:240, w:200, h:60, label:"Secretaria General", sub:"Sec. Despacho - Grado 03", type:"lnr", tematico:"constitucional", responsable:"Grace Velez Millon", grado:3, codigo:20, vacantes:0, certeza:"Oficial 2026" },
-      { id:"SEC-GOB", x:290, y:240, w:200, h:60, label:"Sec. Gobierno", sub:"Sec. Despacho - Grado 03", type:"lnr", tematico:"desarrollo", responsable:"Ricardo Caicedo Quintero", grado:3, codigo:20, vacantes:1, certeza:"Oficial 2026" },
-      { id:"SEC-JUR", x:520, y:240, w:200, h:60, label:"Sec. Juridica", sub:"Sec. Despacho - Grado 03", type:"lnr", tematico:"constitucional", responsable:"Jorge Eliecer Corral Aramburo", grado:3, codigo:20, vacantes:3, certeza:"Oficial 2026" },
-      { id:"SEC-HAC", x:750, y:240, w:200, h:60, label:"Sec. Hacienda", sub:"Sec. Despacho - Grado 03", type:"lnr", tematico:"economico", responsable:"Maria Eugenia Figueroa Velez", grado:3, codigo:20, vacantes:1, certeza:"Oficial 2026" },
-      { id:"SEC-PLA", x:980, y:240, w:200, h:60, label:"Sec. Planeacion", sub:"Sec. Despacho - Grado 03", type:"lnr", tematico:"desarrollo", responsable:"Jesus David Perdomo Jacanamejoy", grado:3, codigo:20, vacantes:0, certeza:"Oficial 2026" },
-      { id:"SEC-DES", x:1210, y:240, w:200, h:60, label:"Sec. Des. Institucional", sub:"Sec. Despacho - Grado 03", type:"lnr", tematico:"desarrollo", responsable:"Juan Carlos Suarez Soto", grado:3, codigo:20, vacantes:0, certeza:"Oficial 2026" },
-      { id:"SEC-INF", x:1440, y:240, w:200, h:60, label:"Sec. Infraestructura", sub:"Sec. Despacho - Grado 03", type:"lnr", tematico:"infraestructura", responsable:"Diego Fernando Saavedra Paz", grado:3, codigo:20, vacantes:3, certeza:"Oficial 2026" },
-      { id:"SEC-SAL", x:60, y:380, w:200, h:60, label:"Sec. Salud", sub:"Sec. Despacho - Grado 03", type:"lnr", tematico:"social", responsable:"Jhon Jairo Satizabal", grado:3, codigo:20, vacantes:1, certeza:"Oficial 2026" },
-      { id:"SEC-EDU", x:290, y:380, w:200, h:60, label:"Sec. Educacion", sub:"Sec. Despacho - Grado 03", type:"lnr", tematico:"social", responsable:"Edwin Rebolledo Caicedo", grado:3, codigo:20, vacantes:0, certeza:"Oficial 2026" },
-      { id:"SEC-AGR", x:520, y:380, w:200, h:60, label:"Sec. Agropecuaria", sub:"Sec. Despacho - Grado 03", type:"lnr", tematico:"economico", responsable:"Giovanny Moncayo Velez", grado:3, codigo:20, vacantes:0, certeza:"Oficial 2026" },
-      { id:"SEC-INS", x:750, y:380, w:200, h:60, label:"Sec. Integracion Social", sub:"Sec. Despacho - Grado 03", type:"lnr", tematico:"social", responsable:"Catherine Filigrana Mazuera", grado:3, codigo:20, vacantes:0, certeza:"Oficial 2026" },
-      { id:"SEC-TRA", x:980, y:380, w:200, h:60, label:"Sec. Transito", sub:"Sec. Despacho - Grado 03", type:"lnr", tematico:"economico", responsable:"Marisol Noguera Correa", grado:3, codigo:20, vacantes:0, certeza:"Oficial 2026" },
-      { id:"SEC-PAR", x:1210, y:380, w:200, h:60, label:"Sec. Participacion", sub:"Sec. Despacho - Grado 03", type:"lnr", tematico:"social", responsable:"Maria Esther Guendica Argote", grado:3, codigo:20, vacantes:0, certeza:"Oficial 2026" },
-      { id:"SEC-CUL", x:1440, y:380, w:200, h:60, label:"Sec. Cultura", sub:"Sec. Despacho - Grado 03", type:"lnr", tematico:"economico", responsable:"Jhon Alexander Ortiz Morales", grado:3, codigo:20, vacantes:0, certeza:"Oficial 2026" },
-      { id:"SUB-GOB-IC", x:290, y:330, w:190, h:40, label:"Sub. Inspeccion y Control", sub:"Subsecretaria", type:"lnr", tematico:"desarrollo", responsable:"Sandra Lorena Ospina Salamanca", grado:1, codigo:45, vacantes:1, parent:"SEC-GOB" },
-      { id:"SUB-HAC-FIN", x:720, y:330, w:170, h:40, label:"Sub. Financiera", sub:"Subsecretaria", type:"lnr", tematico:"economico", responsable:"Jenny Salazar", grado:1, codigo:45, vacantes:0, parent:"SEC-HAC" },
-      { id:"SUB-HAC-CC", x:900, y:330, w:170, h:40, label:"Sub. Cobro Coactivo", sub:"Subsecretaria", type:"lnr", tematico:"economico", responsable:"Ana Alejandra Ortegon Fajardo", grado:1, codigo:45, vacantes:0, parent:"SEC-HAC" },
-      { id:"SUB-HAC-IT", x:1080, y:330, w:170, h:40, label:"Sub. Ingresos y Tesoreria", sub:"Subsecretaria", type:"lnr", tematico:"economico", responsable:"Anabeiba Echeverry Caicedo", grado:1, codigo:45, vacantes:0, parent:"SEC-HAC" },
-      { id:"SUB-PLA-SE", x:950, y:330, w:170, h:40, label:"Sub. Planeacion Socioeconom.", sub:"Subsecretaria", type:"lnr", tematico:"desarrollo", responsable:"Yessica Vallejo Catano", grado:1, codigo:45, vacantes:0, parent:"SEC-PLA" },
-      { id:"SUB-PLA-PT", x:1130, y:330, w:170, h:40, label:"Sub. Planeacion Territorial", sub:"Subsecretaria", type:"lnr", tematico:"desarrollo", responsable:"Margarita Rosa Dominguez Von Rosen", grado:1, codigo:45, vacantes:0, parent:"SEC-PLA" },
-      { id:"SUB-DES-TH", x:1180, y:330, w:170, h:40, label:"Gestion Talento Humano", sub:"Subsecretaria", type:"lnr", tematico:"desarrollo", responsable:"Luis Felipe Gonzalez Mora", grado:1, codigo:45, vacantes:0, parent:"SEC-DES" },
-      { id:"SUB-DES-RF", x:1360, y:330, w:170, h:40, label:"Gestion Recursos Fisicos", sub:"Subsecretaria", type:"lnr", tematico:"desarrollo", responsable:"Sorelly Lopez Mafla", grado:1, codigo:45, vacantes:0, parent:"SEC-DES" },
-      { id:"SUB-INF-IV", x:1410, y:330, w:170, h:40, label:"Infraestructura y Valorizacion", sub:"Subsecretaria", type:"lnr", tematico:"infraestructura", responsable:"Andres Fernando Osorio Ocampo", grado:1, codigo:45, vacantes:0, parent:"SEC-INF" },
-      { id:"SUB-INF-RU", x:1590, y:330, w:170, h:40, label:"Renovacion Urbana y Vivienda", sub:"Subsecretaria", type:"lnr", tematico:"infraestructura", responsable:"Diana Marin", grado:1, codigo:45, vacantes:0, parent:"SEC-INF" },
-      { id:"SUB-SAL-SP", x:30, y:470, w:170, h:40, label:"Salud Publica", sub:"Subsecretaria", type:"lnr", tematico:"social", responsable:"Mayerli Pantoja", grado:1, codigo:45, vacantes:0, parent:"SEC-SAL" },
-      { id:"SUB-SAL-PA", x:210, y:470, w:170, h:40, label:"Planeacion y Administracion", sub:"Subsecretaria", type:"lnr", tematico:"social", responsable:"Marly Jicet Silva Zuniga", grado:1, codigo:45, vacantes:0, parent:"SEC-SAL" },
-      { id:"SUB-EDU-AF", x:260, y:470, w:170, h:40, label:"Administrativo y Financiero", sub:"Subsecretaria", type:"lnr", tematico:"social", responsable:"Juan Carlos Sandoval Izquierdo", grado:1, codigo:45, vacantes:0, parent:"SEC-EDU" },
-      { id:"SUB-EDU-CE", x:440, y:470, w:170, h:40, label:"Cobertura Educativa", sub:"Subsecretaria", type:"lnr", tematico:"social", responsable:"Maria Camila Jaramillo Benalcazar", grado:1, codigo:45, vacantes:0, parent:"SEC-EDU" },
-      { id:"SUB-EDU-CAL", x:620, y:470, w:170, h:40, label:"Calidad Educativa", sub:"Subsecretaria", type:"lnr", tematico:"social", responsable:"Katherine Patino Estrada", grado:1, codigo:45, vacantes:0, parent:"SEC-EDU" },
-      { id:"SUB-AGR-RP", x:500, y:470, w:170, h:40, label:"Promocion Rural y Posconflicto", sub:"Subsecretaria", type:"lnr", tematico:"economico", responsable:"Gilberto Llanos Ossa", grado:1, codigo:45, vacantes:0, parent:"SEC-AGR" },
-      { id:"SUB-INS-DS", x:720, y:470, w:170, h:40, label:"Inclusion y Desarrollo Social", sub:"Subsecretaria", type:"lnr", tematico:"social", responsable:"Luz Elena Sandoval Alvarez", grado:1, codigo:45, vacantes:0, parent:"SEC-INS" },
-      { id:"SUB-INS-IA", x:900, y:470, w:170, h:40, label:"Infancia, Adolescencia y Juventud", sub:"Subsecretaria", type:"lnr", tematico:"social", responsable:"Elizabeth Dorado Flor", grado:1, codigo:45, vacantes:0, parent:"SEC-INS" },
-      { id:"SUB-TRA-SV", x:950, y:470, w:170, h:40, label:"Seguridad Vial y Registro", sub:"Subsecretaria", type:"lnr", tematico:"economico", responsable:"Isabella Escobar", grado:1, codigo:45, vacantes:0, parent:"SEC-TRA" },
-      { id:"SUB-TRA-EM", x:1130, y:470, w:170, h:40, label:"Desarrollo Estrategico Movilidad", sub:"Subsecretaria", type:"lnr", tematico:"economico", responsable:"Erika Tinoco", grado:1, codigo:45, vacantes:0, parent:"SEC-TRA" }
+      { id:"ALC", x:710, y:48, w:220, h:60, label:"ALCALDE", sub:"Victor Manuel Ramos Vergara - 60 cargos", type:"electivo", tematico:"electivo", responsable:"Victor Manuel Ramos Vergara", grado:4, codigo:5, vacantes:0, certeza:"Oficial 2026" },
+      { id:"DIR-CI", x:410, y:170, w:190, h:55, label:"Control Interno", sub:"Eliana Corral Aramburo", type:"lnr", tematico:"constitucional", responsable:"Eliana Corral Aramburo", vacantes:0, parent:"ALC" },
+      { id:"DIR-CID", x:620, y:170, w:190, h:55, label:"Control Interno Discip.", sub:"Alba Lucia Romero Pinzon", type:"lnr", tematico:"constitucional", responsable:"Alba Lucia Romero Pinzon", vacantes:0, parent:"ALC" },
+      { id:"DIR-COM", x:830, y:170, w:190, h:55, label:"Comunicaciones", sub:"Carlos Andres Arias", type:"lnr", tematico:"desarrollo", responsable:"Carlos Andres Arias", vacantes:0, parent:"ALC" },
+      { id:"DIR-TIC", x:1040, y:170, w:190, h:55, label:"Tecnologia e Innovacion", sub:"Mauricio Hormaza", type:"lnr", tematico:"desarrollo", responsable:"Mauricio Hormaza", vacantes:0, parent:"ALC" },
+      { id:"DIR-CON", x:410, y:248, w:190, h:55, label:"Contratacion Publica", sub:"Olmedo de Jesus Ortiz Acevedo", type:"lnr", tematico:"economico", responsable:"Olmedo de Jesus Ortiz Acevedo", vacantes:0, parent:"ALC" },
+      { id:"DIR-EMP", x:620, y:248, w:190, h:55, label:"Emprendimiento", sub:"Elizabeth Roman", type:"lnr", tematico:"economico", responsable:"Elizabeth Roman", vacantes:0, parent:"ALC" },
+      { id:"DIR-GRD", x:830, y:248, w:190, h:55, label:"Gestion del Riesgo", sub:"Abelardo Angulo Cabezas", type:"lnr", tematico:"infraestructura", responsable:"Abelardo Angulo Cabezas", vacantes:0, parent:"ALC" },
+      { id:"DIR-MAM", x:1040, y:248, w:190, h:55, label:"Medio Ambiente", sub:"Patricia Munoz Munoz", type:"lnr", tematico:"infraestructura", responsable:"Patricia Munoz Munoz", vacantes:0, parent:"ALC" },
+      { id:"SEC-GEN", x:60, y:400, w:200, h:60, label:"Secretaria General", sub:"Grace Velez Millon - Grado 03", type:"lnr", tematico:"constitucional", responsable:"Grace Velez Millon", grado:3, codigo:20, vacantes:0, certeza:"Oficial 2026" },
+      { id:"SEC-GOB", x:290, y:400, w:200, h:60, label:"Sec. Gobierno", sub:"Ricardo Caicedo Quintero - Grado 03", type:"lnr", tematico:"desarrollo", responsable:"Ricardo Caicedo Quintero", grado:3, codigo:20, vacantes:1, certeza:"Oficial 2026" },
+      { id:"SEC-JUR", x:520, y:400, w:200, h:60, label:"Sec. Juridica", sub:"Jorge Eliecer Corral - Grado 03", type:"lnr", tematico:"constitucional", responsable:"Jorge Eliecer Corral Aramburo", grado:3, codigo:20, vacantes:3, certeza:"Oficial 2026" },
+      { id:"SEC-HAC", x:750, y:400, w:200, h:60, label:"Sec. Hacienda", sub:"Maria Eugenia Figueroa - Grado 03", type:"lnr", tematico:"economico", responsable:"Maria Eugenia Figueroa Velez", grado:3, codigo:20, vacantes:1, certeza:"Oficial 2026" },
+      { id:"SEC-PLA", x:980, y:400, w:200, h:60, label:"Sec. Planeacion", sub:"Jesus David Perdomo - Grado 03", type:"lnr", tematico:"desarrollo", responsable:"Jesus David Perdomo Jacanamejoy", grado:3, codigo:20, vacantes:0, certeza:"Oficial 2026" },
+      { id:"SEC-DES", x:1210, y:400, w:200, h:60, label:"Sec. Des. Institucional", sub:"Juan Carlos Suarez Soto - Grado 03", type:"lnr", tematico:"desarrollo", responsable:"Juan Carlos Suarez Soto", grado:3, codigo:20, vacantes:0, certeza:"Oficial 2026" },
+      { id:"SEC-INF", x:1440, y:400, w:200, h:60, label:"Sec. Infraestructura", sub:"Diego Fernando Saavedra - Grado 03", type:"lnr", tematico:"infraestructura", responsable:"Diego Fernando Saavedra Paz", grado:3, codigo:20, vacantes:3, certeza:"Oficial 2026" },
+      { id:"SEC-SAL", x:60, y:540, w:200, h:60, label:"Sec. Salud", sub:"Jhon Jairo Satizabal - Grado 03", type:"lnr", tematico:"social", responsable:"Jhon Jairo Satizabal", grado:3, codigo:20, vacantes:1, certeza:"Oficial 2026" },
+      { id:"SEC-EDU", x:290, y:540, w:200, h:60, label:"Sec. Educacion", sub:"Edwin Rebolledo Caicedo - Grado 03", type:"lnr", tematico:"social", responsable:"Edwin Rebolledo Caicedo", grado:3, codigo:20, vacantes:0, certeza:"Oficial 2026" },
+      { id:"SEC-AGR", x:520, y:540, w:200, h:60, label:"Sec. Agropecuaria", sub:"Giovanny Moncayo Velez - Grado 03", type:"lnr", tematico:"economico", responsable:"Giovanny Moncayo Velez", grado:3, codigo:20, vacantes:0, certeza:"Oficial 2026" },
+      { id:"SEC-INS", x:750, y:540, w:200, h:60, label:"Sec. Integracion Social", sub:"Catherine Filigrana - Grado 03", type:"lnr", tematico:"social", responsable:"Catherine Filigrana Mazuera", grado:3, codigo:20, vacantes:0, certeza:"Oficial 2026" },
+      { id:"SEC-TRA", x:980, y:540, w:200, h:60, label:"Sec. Transito", sub:"Marisol Noguera Correa - Grado 03", type:"lnr", tematico:"economico", responsable:"Marisol Noguera Correa", grado:3, codigo:20, vacantes:0, certeza:"Oficial 2026" },
+      { id:"SEC-PAR", x:1210, y:540, w:200, h:60, label:"Sec. Participacion", sub:"Maria Esther Guendica - Grado 03", type:"lnr", tematico:"social", responsable:"Maria Esther Guendica Argote", grado:3, codigo:20, vacantes:0, certeza:"Oficial 2026" },
+      { id:"SEC-CUL", x:1440, y:540, w:200, h:60, label:"Sec. Cultura", sub:"Jhon Alexander Ortiz - Grado 03", type:"lnr", tematico:"economico", responsable:"Jhon Alexander Ortiz Morales", grado:3, codigo:20, vacantes:0, certeza:"Oficial 2026" },
+      { id:"SUB-GOB-IC", x:290, y:660, w:190, h:40, label:"Sub. Inspeccion y Control", sub:"Sandra Lorena Ospina", type:"lnr", tematico:"desarrollo", responsable:"Sandra Lorena Ospina Salamanca", grado:1, codigo:45, vacantes:1, parent:"SEC-GOB" },
+      { id:"SUB-HAC-FIN", x:700, y:660, w:170, h:40, label:"Sub. Financiera", sub:"Jenny Salazar", type:"lnr", tematico:"economico", responsable:"Jenny Salazar", grado:1, codigo:45, vacantes:0, parent:"SEC-HAC" },
+      { id:"SUB-HAC-CC", x:890, y:660, w:170, h:40, label:"Sub. Cobro Coactivo", sub:"Ana Alejandra Ortegon", type:"lnr", tematico:"economico", responsable:"Ana Alejandra Ortegon Fajardo", grado:1, codigo:45, vacantes:0, parent:"SEC-HAC" },
+      { id:"SUB-HAC-IT", x:1080, y:660, w:170, h:40, label:"Sub. Ingresos y Tesoreria", sub:"Anabeiba Echeverry", type:"lnr", tematico:"economico", responsable:"Anabeiba Echeverry Caicedo", grado:1, codigo:45, vacantes:0, parent:"SEC-HAC" },
+      { id:"SUB-PLA-SE", x:950, y:660, w:170, h:40, label:"Sub. Planeacion Socioeconom.", sub:"Yessica Vallejo Catano", type:"lnr", tematico:"desarrollo", responsable:"Yessica Vallejo Catano", grado:1, codigo:45, vacantes:0, parent:"SEC-PLA" },
+      { id:"SUB-PLA-PT", x:1130, y:660, w:170, h:40, label:"Sub. Planeacion Territorial", sub:"Margarita Rosa Dominguez", type:"lnr", tematico:"desarrollo", responsable:"Margarita Rosa Dominguez Von Rosen", grado:1, codigo:45, vacantes:0, parent:"SEC-PLA" },
+      { id:"SUB-DES-TH", x:1210, y:660, w:170, h:40, label:"Gestion Talento Humano", sub:"Luis Felipe Gonzalez Mora", type:"lnr", tematico:"desarrollo", responsable:"Luis Felipe Gonzalez Mora", grado:1, codigo:45, vacantes:0, parent:"SEC-DES" },
+      { id:"SUB-DES-RF", x:1390, y:660, w:170, h:40, label:"Gestion Recursos Fisicos", sub:"Sorelly Lopez Mafla", type:"lnr", tematico:"desarrollo", responsable:"Sorelly Lopez Mafla", grado:1, codigo:45, vacantes:0, parent:"SEC-DES" },
+      { id:"SUB-INF-IV", x:1440, y:660, w:170, h:40, label:"Infraestructura y Valorizacion", sub:"Andres Fernando Osorio", type:"lnr", tematico:"infraestructura", responsable:"Andres Fernando Osorio Ocampo", grado:1, codigo:45, vacantes:0, parent:"SEC-INF" },
+      { id:"SUB-INF-RU", x:1620, y:660, w:170, h:40, label:"Renovacion Urbana y Vivienda", sub:"Diana Marin", type:"lnr", tematico:"infraestructura", responsable:"Diana Marin", grado:1, codigo:45, vacantes:0, parent:"SEC-INF" },
+      { id:"SUB-SAL-SP", x:60, y:740, w:170, h:40, label:"Salud Publica", sub:"Mayerli Pantoja", type:"lnr", tematico:"social", responsable:"Mayerli Pantoja", grado:1, codigo:45, vacantes:0, parent:"SEC-SAL" },
+      { id:"SUB-SAL-PA", x:240, y:740, w:170, h:40, label:"Planeacion y Administracion", sub:"Marly Jicet Silva Zuniga", type:"lnr", tematico:"social", responsable:"Marly Jicet Silva Zuniga", grado:1, codigo:45, vacantes:0, parent:"SEC-SAL" },
+      { id:"SUB-EDU-AF", x:290, y:740, w:170, h:40, label:"Administrativo y Financiero", sub:"Juan Carlos Sandoval", type:"lnr", tematico:"social", responsable:"Juan Carlos Sandoval Izquierdo", grado:1, codigo:45, vacantes:0, parent:"SEC-EDU" },
+      { id:"SUB-EDU-CE", x:470, y:740, w:170, h:40, label:"Cobertura Educativa", sub:"Maria Camila Jaramillo", type:"lnr", tematico:"social", responsable:"Maria Camila Jaramillo Benalcazar", grado:1, codigo:45, vacantes:0, parent:"SEC-EDU" },
+      { id:"SUB-EDU-CAL", x:650, y:740, w:170, h:40, label:"Calidad Educativa", sub:"Katherine Patino Estrada", type:"lnr", tematico:"social", responsable:"Katherine Patino Estrada", grado:1, codigo:45, vacantes:0, parent:"SEC-EDU" },
+      { id:"SUB-AGR-RP", x:520, y:740, w:170, h:40, label:"Promocion Rural y Posconflicto", sub:"Gilberto Llanos Ossa", type:"lnr", tematico:"economico", responsable:"Gilberto Llanos Ossa", grado:1, codigo:45, vacantes:0, parent:"SEC-AGR" },
+      { id:"SUB-INS-DS", x:750, y:740, w:170, h:40, label:"Inclusion y Desarrollo Social", sub:"Luz Elena Sandoval", type:"lnr", tematico:"social", responsable:"Luz Elena Sandoval Alvarez", grado:1, codigo:45, vacantes:0, parent:"SEC-INS" },
+      { id:"SUB-INS-IA", x:930, y:740, w:170, h:40, label:"Infancia, Adolescencia y Juventud", sub:"Elizabeth Dorado Flor", type:"lnr", tematico:"social", responsable:"Elizabeth Dorado Flor", grado:1, codigo:45, vacantes:0, parent:"SEC-INS" },
+      { id:"SUB-TRA-SV", x:980, y:740, w:170, h:40, label:"Seguridad Vial y Registro", sub:"Isabella Escobar", type:"lnr", tematico:"economico", responsable:"Isabella Escobar", grado:1, codigo:45, vacantes:0, parent:"SEC-TRA" },
+      { id:"SUB-TRA-EM", x:1160, y:740, w:170, h:40, label:"Desarrollo Estrategico Movilidad", sub:"Erika Tinoco", type:"lnr", tematico:"economico", responsable:"Erika Tinoco", grado:1, codigo:45, vacantes:0, parent:"SEC-TRA" }
     ],
     edges: [
       { from:"ALC", to:"DIR-CI" },{ from:"ALC", to:"DIR-CID" },{ from:"ALC", to:"DIR-COM" },{ from:"ALC", to:"DIR-TIC" },
@@ -394,10 +399,19 @@ function updateStats(view) {
 
 function renderSVG(view) {
   const container = document.getElementById('svg-container');
-  const maxX = Math.max(...view.nodes.map(n => n.x + n.w)) + 60;
-  const maxY = Math.max(...view.nodes.map(n => n.y + n.h)) + 60;
+  let maxX = Math.max(...view.nodes.map(n => n.x + n.w)) + 60;
+  let maxY = Math.max(...view.nodes.map(n => n.y + n.h)) + 60;
+  if (view.groups) view.groups.forEach(g => { maxX = Math.max(maxX, g.x + g.w + 40); maxY = Math.max(maxY, g.y + g.h + 40); });
 
   let svg = `<svg width="${maxX}" height="${maxY}" viewBox="0 0 ${maxX} ${maxY}" xmlns="http://www.w3.org/2000/svg" id="org-svg">`;
+
+  // Group containers (drawn first, behind everything)
+  if (view.groups) {
+    view.groups.forEach(g => {
+      svg += `<rect class="group-rect" x="${g.x}" y="${g.y}" width="${g.w}" height="${g.h}"/>`;
+      svg += `<text class="group-label" x="${g.x + g.w/2}" y="${g.y - 8}">${g.label}</text>`;
+    });
+  }
 
   view.edges.forEach(e => {
     const from = view.nodes.find(n => n.id === e.from);
