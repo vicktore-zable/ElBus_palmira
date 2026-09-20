@@ -1,0 +1,600 @@
+{
+  "proyecto": "ElBus_palmira_v2",
+  "version": "2.0",
+  "fecha_generacion": "2026-09-20",
+  "fuente_principal": "Matriz_Organigrama_Cargos_Palmira_2026_Detallada.xlsx",
+  "plantas_oficiales": {
+    "despacho_alcalde": 60,
+    "secretarios_despacho": 15,
+    "subsecretarios": 20,
+    "direcciones": 7,
+    "asesores": 7
+  },
+  "vacantes_documentadas": 10,
+  "total_nodos_lnr": 43,
+  "fuentes": [
+    {
+      "id": "F01",
+      "nombre": "Plan Anual de Vacantes 2026",
+      "fecha": "26/01/2026"
+    },
+    {
+      "id": "F02",
+      "nombre": "Plan de Prevision de Recursos Humanos 2026",
+      "fecha": "26/01/2026"
+    },
+    {
+      "id": "F03",
+      "nombre": "Directorio Principal Alcaldia de Palmira",
+      "fecha": "2026"
+    },
+    {
+      "id": "F04",
+      "nombre": "Decreto 348 de 15/12/2023",
+      "fecha": "2023"
+    },
+    {
+      "id": "F05",
+      "nombre": "Decreto 922 de 18/09/2020",
+      "fecha": "2020"
+    }
+  ],
+  "tematicos": {
+    "electivo": {
+      "color": "#2ecc71",
+      "bg": "#1a3a2a",
+      "label": "Alcalde (Electivo)"
+    },
+    "social": {
+      "color": "#9b59b6",
+      "bg": "#2a1a3a",
+      "label": "Eje Social"
+    },
+    "desarrollo": {
+      "color": "#3498db",
+      "bg": "#1a2a3a",
+      "label": "Eje Desarrollo"
+    },
+    "economico": {
+      "color": "#e67e22",
+      "bg": "#3a2a1a",
+      "label": "Eje Economico"
+    },
+    "infraestructura": {
+      "color": "#f1c40f",
+      "bg": "#2a2a1a",
+      "label": "Infraestructura"
+    },
+    "constitucional": {
+      "color": "#e74c3c",
+      "bg": "#3a1a1a",
+      "label": "Constitucional"
+    },
+    "entidad": {
+      "color": "#1abc9c",
+      "bg": "#1a3a3a",
+      "label": "Descentralizados"
+    }
+  },
+  "estructura": {
+    "nivel_0": {
+      "id": "ALC",
+      "cargo": "Alcalde",
+      "dependencia": "Despacho del Alcalde",
+      "responsable": "Victor Manuel Ramos Vergara",
+      "grado": 4,
+      "codigo": 5,
+      "regimen": "Electivo",
+      "plazas_planta": 60,
+      "vacantes": 0,
+      "certeza": "Oficial 2026",
+      "fuente": "F01",
+      "tematico": "electivo",
+      "tematico_label": "Alcalde"
+    },
+    "direcciones_despacho": [
+      {
+        "id": "DIR-CI",
+        "cargo": "Director",
+        "subdependencia": "Oficina de Control Interno",
+        "dependencia": "Despacho del Alcalde",
+        "responsable": "Eliana Corral Aramburo",
+        "tipo": "lnr",
+        "tematico": "constitucional",
+        "vacantes": 0,
+        "certeza": "Estructura oficial 2026"
+      },
+      {
+        "id": "DIR-CID",
+        "cargo": "Director",
+        "subdependencia": "Control Interno Disciplinario",
+        "dependencia": "Despacho del Alcalde",
+        "responsable": "Alba Lucia Romero Pinzon",
+        "tipo": "lnr",
+        "tematico": "constitucional",
+        "vacantes": 0,
+        "certeza": "Estructura oficial 2026"
+      },
+      {
+        "id": "DIR-COM",
+        "cargo": "Director",
+        "subdependencia": "Comunicaciones",
+        "dependencia": "Despacho del Alcalde",
+        "responsable": "Carlos Andres Arias",
+        "tipo": "lnr",
+        "tematico": "desarrollo",
+        "vacantes": 0,
+        "certeza": "Estructura oficial 2026"
+      },
+      {
+        "id": "DIR-TIC",
+        "cargo": "Director",
+        "subdependencia": "Tecnologia, Innovacion y Ciencia",
+        "dependencia": "Despacho del Alcalde",
+        "responsable": "Mauricio Hormaza",
+        "tipo": "lnr",
+        "tematico": "desarrollo",
+        "vacantes": 0,
+        "certeza": "Estructura oficial 2026"
+      },
+      {
+        "id": "DIR-CON",
+        "cargo": "Director",
+        "subdependencia": "Contratacion Publica",
+        "dependencia": "Despacho del Alcalde",
+        "responsable": "Olmedo de Jesus Ortiz Acevedo",
+        "tipo": "lnr",
+        "tematico": "economico",
+        "vacantes": 0,
+        "certeza": "Estructura oficial 2026"
+      },
+      {
+        "id": "DIR-EMP",
+        "cargo": "Director",
+        "subdependencia": "Emprendimiento y Desarrollo Empresarial",
+        "dependencia": "Despacho del Alcalde",
+        "responsable": "Elizabeth Roman",
+        "tipo": "lnr",
+        "tematico": "economico",
+        "vacantes": 0,
+        "certeza": "Estructura oficial 2026"
+      },
+      {
+        "id": "DIR-GRD",
+        "cargo": "Director",
+        "subdependencia": "Gestion del Riesgo de Desastres",
+        "dependencia": "Despacho del Alcalde",
+        "responsable": "Abelardo Angulo Cabezas",
+        "tipo": "lnr",
+        "tematico": "infraestructura",
+        "vacantes": 0,
+        "certeza": "Estructura oficial 2026"
+      },
+      {
+        "id": "DIR-MAM",
+        "cargo": "Director",
+        "subdependencia": "Gestion del Medio Ambiente",
+        "dependencia": "Despacho del Alcalde",
+        "responsable": "Patricia Munoz Munoz",
+        "tipo": "lnr",
+        "tematico": "infraestructura",
+        "vacantes": 0,
+        "certeza": "Estructura oficial 2026"
+      }
+    ],
+    "secretarias": [
+      {
+        "id": "SEC-GEN",
+        "cargo": "Secretario de Despacho",
+        "dependencia": "Secretaria General",
+        "responsable": "Grace Velez Millon",
+        "grado": 3,
+        "codigo": 20,
+        "tipo": "lnr",
+        "tematico": "constitucional",
+        "vacantes": 0,
+        "certeza": "Oficial 2026",
+        "subdependencias": []
+      },
+      {
+        "id": "SEC-GOB",
+        "cargo": "Secretario de Despacho",
+        "dependencia": "Secretaria de Gobierno",
+        "responsable": "Ricardo Caicedo Quintero",
+        "grado": 3,
+        "codigo": 20,
+        "tipo": "lnr",
+        "tematico": "desarrollo",
+        "vacantes": 1,
+        "certeza": "Oficial 2026",
+        "subdependencias": [
+          {
+            "id": "SUB-GOB-IC",
+            "cargo": "Subsecretaria",
+            "subdependencia": "Subsecretaria de Inspeccion y Control",
+            "responsable": "Sandra Lorena Ospina Salamanca",
+            "grado": 1,
+            "codigo": 45,
+            "tipo": "lnr",
+            "vacantes": 1,
+            "certeza": "Estructura oficial 2026"
+          }
+        ]
+      },
+      {
+        "id": "SEC-JUR",
+        "cargo": "Secretario de Despacho",
+        "dependencia": "Secretaria Juridica",
+        "responsable": "Jorge Eliecer Corral Aramburo",
+        "grado": 3,
+        "codigo": 20,
+        "tipo": "lnr",
+        "tematico": "constitucional",
+        "vacantes": 3,
+        "certeza": "Oficial 2026",
+        "subdependencias": []
+      },
+      {
+        "id": "SEC-HAC",
+        "cargo": "Secretario de Despacho",
+        "dependencia": "Secretaria de Hacienda",
+        "responsable": "Maria Eugenia Figueroa Velez",
+        "grado": 3,
+        "codigo": 20,
+        "tipo": "lnr",
+        "tematico": "economico",
+        "vacantes": 1,
+        "certeza": "Oficial 2026",
+        "subdependencias": [
+          {
+            "id": "SUB-HAC-FIN",
+            "cargo": "Subsecretaria",
+            "subdependencia": "Subsecretaria Financiera",
+            "responsable": "Jenny Salazar",
+            "grado": 1,
+            "codigo": 45,
+            "tipo": "lnr",
+            "vacantes": 0,
+            "certeza": "Estructura oficial 2026"
+          },
+          {
+            "id": "SUB-HAC-CC",
+            "cargo": "Subsecretaria",
+            "subdependencia": "Subsecretaria de Cobro Coactivo",
+            "responsable": "Ana Alejandra Ortegon Fajardo",
+            "grado": 1,
+            "codigo": 45,
+            "tipo": "lnr",
+            "vacantes": 0,
+            "certeza": "Estructura oficial 2026"
+          },
+          {
+            "id": "SUB-HAC-IT",
+            "cargo": "Subsecretaria",
+            "subdependencia": "Subsecretaria de Ingresos y Tesoreria",
+            "responsable": "Anabeiba Echeverry Caicedo",
+            "grado": 1,
+            "codigo": 45,
+            "tipo": "lnr",
+            "vacantes": 0,
+            "certeza": "Estructura oficial 2026"
+          }
+        ]
+      },
+      {
+        "id": "SEC-PLA",
+        "cargo": "Secretario de Despacho",
+        "dependencia": "Secretaria de Planeacion",
+        "responsable": "Jesus David Perdomo Jacanamejoy",
+        "grado": 3,
+        "codigo": 20,
+        "tipo": "lnr",
+        "tematico": "desarrollo",
+        "vacantes": 0,
+        "certeza": "Oficial 2026",
+        "subdependencias": [
+          {
+            "id": "SUB-PLA-SE",
+            "cargo": "Subsecretaria",
+            "subdependencia": "Subsecretaria de Planeacion Socioeconomica y Estrategica",
+            "responsable": "Yessica Vallejo Catano",
+            "grado": 1,
+            "codigo": 45,
+            "tipo": "lnr",
+            "vacantes": 0,
+            "certeza": "Estructura oficial 2026"
+          },
+          {
+            "id": "SUB-PLA-PT",
+            "cargo": "Subsecretaria",
+            "subdependencia": "Subsecretaria de Planeacion Territorial",
+            "responsable": "Margarita Rosa Dominguez Von Rosen",
+            "grado": 1,
+            "codigo": 45,
+            "tipo": "lnr",
+            "vacantes": 0,
+            "certeza": "Estructura oficial 2026"
+          }
+        ]
+      },
+      {
+        "id": "SEC-DES",
+        "cargo": "Secretario de Despacho",
+        "dependencia": "Secretaria de Desarrollo Institucional",
+        "responsable": "Juan Carlos Suarez Soto",
+        "grado": 3,
+        "codigo": 20,
+        "tipo": "lnr",
+        "tematico": "desarrollo",
+        "vacantes": 0,
+        "certeza": "Oficial 2026",
+        "subdependencias": [
+          {
+            "id": "SUB-DES-TH",
+            "cargo": "Subsecretaria",
+            "subdependencia": "Gestion de Talento Humano",
+            "responsable": "Luis Felipe Gonzalez Mora",
+            "grado": 1,
+            "codigo": 45,
+            "tipo": "lnr",
+            "vacantes": 0,
+            "certeza": "Estructura oficial 2026"
+          },
+          {
+            "id": "SUB-DES-RF",
+            "cargo": "Subsecretaria",
+            "subdependencia": "Gestion de Recursos Fisicos",
+            "responsable": "Sorelly Lopez Mafla",
+            "grado": 1,
+            "codigo": 45,
+            "tipo": "lnr",
+            "vacantes": 0,
+            "certeza": "Estructura oficial 2026"
+          }
+        ]
+      },
+      {
+        "id": "SEC-INF",
+        "cargo": "Secretario de Despacho",
+        "dependencia": "Secretaria de Infraestructura, Renovacion Urbana y Vivienda",
+        "responsable": "Diego Fernando Saavedra Paz",
+        "grado": 3,
+        "codigo": 20,
+        "tipo": "lnr",
+        "tematico": "infraestructura",
+        "vacantes": 3,
+        "certeza": "Oficial 2026",
+        "subdependencias": [
+          {
+            "id": "SUB-INF-IV",
+            "cargo": "Subsecretaria",
+            "subdependencia": "Infraestructura y Valorizacion",
+            "responsable": "Andres Fernando Osorio Ocampo",
+            "grado": 1,
+            "codigo": 45,
+            "tipo": "lnr",
+            "vacantes": 0,
+            "certeza": "Estructura oficial 2026"
+          },
+          {
+            "id": "SUB-INF-RU",
+            "cargo": "Subsecretaria",
+            "subdependencia": "Renovacion Urbana y Vivienda",
+            "responsable": "Diana Marin",
+            "grado": 1,
+            "codigo": 45,
+            "tipo": "lnr",
+            "vacantes": 0,
+            "certeza": "Estructura oficial 2026"
+          }
+        ]
+      },
+      {
+        "id": "SEC-SAL",
+        "cargo": "Secretario de Despacho",
+        "dependencia": "Secretaria de Salud",
+        "responsable": "Jhon Jairo Satizabal",
+        "grado": 3,
+        "codigo": 20,
+        "tipo": "lnr",
+        "tematico": "social",
+        "vacantes": 1,
+        "certeza": "Oficial 2026",
+        "subdependencias": [
+          {
+            "id": "SUB-SAL-SP",
+            "cargo": "Subsecretaria",
+            "subdependencia": "Salud Publica",
+            "responsable": "Mayerli Pantoja",
+            "grado": 1,
+            "codigo": 45,
+            "tipo": "lnr",
+            "vacantes": 0,
+            "certeza": "Estructura oficial 2026"
+          },
+          {
+            "id": "SUB-SAL-PA",
+            "cargo": "Subsecretaria",
+            "subdependencia": "Planeacion y Administracion",
+            "responsable": "Marly Jicet Silva Zuniga",
+            "grado": 1,
+            "codigo": 45,
+            "tipo": "lnr",
+            "vacantes": 0,
+            "certeza": "Estructura oficial 2026"
+          }
+        ]
+      },
+      {
+        "id": "SEC-EDU",
+        "cargo": "Secretario de Despacho",
+        "dependencia": "Secretaria de Educacion",
+        "responsable": "Edwin Rebolledo Caicedo",
+        "grado": 3,
+        "codigo": 20,
+        "tipo": "lnr",
+        "tematico": "social",
+        "vacantes": 0,
+        "certeza": "Oficial 2026",
+        "subdependencias": [
+          {
+            "id": "SUB-EDU-AF",
+            "cargo": "Subsecretaria",
+            "subdependencia": "Administrativo y Financiero",
+            "responsable": "Juan Carlos Sandoval Izquierdo",
+            "grado": 1,
+            "codigo": 45,
+            "tipo": "lnr",
+            "vacantes": 0,
+            "certeza": "Estructura oficial 2026"
+          },
+          {
+            "id": "SUB-EDU-CE",
+            "cargo": "Subsecretaria",
+            "subdependencia": "Cobertura Educativa",
+            "responsable": "Maria Camila Jaramillo Benalcazar",
+            "grado": 1,
+            "codigo": 45,
+            "tipo": "lnr",
+            "vacantes": 0,
+            "certeza": "Estructura oficial 2026"
+          },
+          {
+            "id": "SUB-EDU-CAL",
+            "cargo": "Subsecretaria",
+            "subdependencia": "Calidad Educativa",
+            "responsable": "Katherine Patino Estrada",
+            "grado": 1,
+            "codigo": 45,
+            "tipo": "lnr",
+            "vacantes": 0,
+            "certeza": "Estructura oficial 2026"
+          }
+        ]
+      },
+      {
+        "id": "SEC-AGR",
+        "cargo": "Secretario de Despacho",
+        "dependencia": "Secretaria Agropecuaria y de Desarrollo Rural",
+        "responsable": "Giovanny Moncayo Velez",
+        "grado": 3,
+        "codigo": 20,
+        "tipo": "lnr",
+        "tematico": "economico",
+        "vacantes": 0,
+        "certeza": "Oficial 2026",
+        "subdependencias": [
+          {
+            "id": "SUB-AGR-RP",
+            "cargo": "Subsecretaria",
+            "subdependencia": "Promocion Rural y Posconflicto",
+            "responsable": "Gilberto Llanos Ossa",
+            "grado": 1,
+            "codigo": 45,
+            "tipo": "lnr",
+            "vacantes": 0,
+            "certeza": "Estructura oficial 2026"
+          }
+        ]
+      },
+      {
+        "id": "SEC-INS",
+        "cargo": "Secretario de Despacho",
+        "dependencia": "Secretaria de Integracion Social",
+        "responsable": "Catherine Filigrana Mazuera",
+        "grado": 3,
+        "codigo": 20,
+        "tipo": "lnr",
+        "tematico": "social",
+        "vacantes": 0,
+        "certeza": "Oficial 2026",
+        "subdependencias": [
+          {
+            "id": "SUB-INS-DS",
+            "cargo": "Subsecretaria",
+            "subdependencia": "Inclusion y Desarrollo Social",
+            "responsable": "Luz Elena Sandoval Alvarez",
+            "grado": 1,
+            "codigo": 45,
+            "tipo": "lnr",
+            "vacantes": 0,
+            "certeza": "Estructura oficial 2026"
+          },
+          {
+            "id": "SUB-INS-IA",
+            "cargo": "Subsecretaria",
+            "subdependencia": "Infancia, Adolescencia y Juventud",
+            "responsable": "Elizabeth Dorado Flor",
+            "grado": 1,
+            "codigo": 45,
+            "tipo": "lnr",
+            "vacantes": 0,
+            "certeza": "Estructura oficial 2026"
+          }
+        ]
+      },
+      {
+        "id": "SEC-TRA",
+        "cargo": "Secretario de Despacho",
+        "dependencia": "Secretaria de Transito y Transporte",
+        "responsable": "Marisol Noguera Correa",
+        "grado": 3,
+        "codigo": 20,
+        "tipo": "lnr",
+        "tematico": "economico",
+        "vacantes": 0,
+        "certeza": "Oficial 2026",
+        "subdependencias": [
+          {
+            "id": "SUB-TRA-SV",
+            "cargo": "Subsecretaria",
+            "subdependencia": "Seguridad Vial y Registro",
+            "responsable": "Isabella Escobar",
+            "grado": 1,
+            "codigo": 45,
+            "tipo": "lnr",
+            "vacantes": 0,
+            "certeza": "Estructura oficial 2026"
+          },
+          {
+            "id": "SUB-TRA-EM",
+            "cargo": "Subsecretaria",
+            "subdependencia": "Desarrollo Estrategico en Movilidad",
+            "responsable": "Erika Tinoco",
+            "grado": 1,
+            "codigo": 45,
+            "tipo": "lnr",
+            "vacantes": 0,
+            "certeza": "Estructura oficial 2026"
+          }
+        ]
+      },
+      {
+        "id": "SEC-PAR",
+        "cargo": "Secretario de Despacho",
+        "dependencia": "Secretaria de Participacion Comunitaria",
+        "responsable": "Maria Esther Guendica Argote",
+        "grado": 3,
+        "codigo": 20,
+        "tipo": "lnr",
+        "tematico": "social",
+        "vacantes": 0,
+        "certeza": "Oficial 2026",
+        "subdependencias": []
+      },
+      {
+        "id": "SEC-CUL",
+        "cargo": "Secretario de Despacho",
+        "dependencia": "Secretaria de Cultura",
+        "responsable": "Jhon Alexander Ortiz Morales",
+        "grado": 3,
+        "codigo": 20,
+        "tipo": "lnr",
+        "tematico": "economico",
+        "vacantes": 0,
+        "certeza": "Oficial 2026",
+        "subdependencias": []
+      }
+    ]
+  }
+}

@@ -1,0 +1,153 @@
+{
+  "proyecto": "ElBus_palmira_v2",
+  "version": "2.0",
+  "fecha_generacion": "2026-09-20",
+  "fuente": "Directorio Principal Alcaldia de Palmira 2026",
+  "entidades": [
+    {
+      "id": "IMDER",
+      "nombre": "Instituto Municipal del Deporte y la Recreacion de Palmira",
+      "sigla": "IMDER",
+      "tipo": "Establecimiento publico",
+      "nit": "815.000.340-6",
+      "creacion": "Acuerdo 072 de 1996",
+      "responsable_actual": "Alberto Llanos Soto",
+      "cargo_responsable": "Gerente",
+      "regimen": "LNR - Nombramiento por Alcalde",
+      "planta_conocida": "No consolidada",
+      "certeza": "Directorio Principal 2026",
+      "posiciones_negociables": [
+        {
+          "id": "IMDER-GER",
+          "cargo": "Gerente",
+          "responsable": "Alberto Llanos Soto",
+          "regimen": "LNR - Nombramiento por Alcalde",
+          "plazas": 1,
+          "norma": "Acuerdo 072/1996 Art.20 modificado Acuerdo 006/1998",
+          "vacantes": 0
+        }
+      ]
+    },
+    {
+      "id": "IMDESEPAL",
+      "nombre": "Instituto Municipal para el Desarrollo Social y Economico de Palmira",
+      "sigla": "IMDESEPAL",
+      "tipo": "Establecimiento publico",
+      "nit": "815.002.334-0",
+      "creacion": "Acuerdo 012 de 2015 + Decreto 388 de 2015",
+      "responsable_actual": "Jaime Steven Celorio Gonzalez",
+      "cargo_responsable": "Director",
+      "regimen": "LNR - Nombramiento por Alcalde",
+      "planta_conocida": "No consolidada",
+      "certeza": "Directorio Principal 2026",
+      "posiciones_negociables": [
+        {
+          "id": "IMDESEPAL-DIR",
+          "cargo": "Director",
+          "responsable": "Jaime Steven Celorio Gonzalez",
+          "regimen": "LNR - Nombramiento por Alcalde",
+          "plazas": 1,
+          "norma": "Decreto 388 de 2015",
+          "vacantes": 0
+        }
+      ]
+    },
+    {
+      "id": "HROB",
+      "nombre": "Hospital Raul Orejuela Bueno E.S.E.",
+      "sigla": "HROB",
+      "tipo": "Empresa Social del Estado",
+      "nit": "815000316-9",
+      "creacion": "Ley 1797 de 2016",
+      "responsable_actual": "Emilce Arevalo Garcia",
+      "cargo_responsable": "Gerente",
+      "regimen": "Nombramiento por Alcalde - Periodo institucional 4 anos",
+      "planta_conocida": "No consolidada",
+      "certeza": "Directorio Principal 2026",
+      "posiciones_negociables": [
+        {
+          "id": "HROB-GER",
+          "cargo": "Gerente",
+          "responsable": "Emilce Arevalo Garcia",
+          "regimen": "Nombramiento por Alcalde - Periodo institucional 4 anos",
+          "plazas": 1,
+          "norma": "Ley 1797/2016 Art.20 + Decreto 1427/2016",
+          "vacantes": 0
+        }
+      ]
+    },
+    {
+      "id": "CDAP",
+      "nombre": "Centro de Diagnostico Automotor de Palmira Ltda.",
+      "sigla": "CDAP",
+      "tipo": "Empresa de Economia Mixta",
+      "nit": "800123366-0",
+      "creacion": "Decreto municipal",
+      "responsable_actual": "Victoria Eugenia Gomez Rayo",
+      "cargo_responsable": "Gerente",
+      "regimen": "LNR - Nombramiento por Alcalde",
+      "planta_conocida": "No consolidada",
+      "certeza": "Directorio Principal 2026",
+      "posiciones_negociables": [
+        {
+          "id": "CDAP-GER",
+          "cargo": "Gerente General",
+          "responsable": "Victoria Eugenia Gomez Rayo",
+          "regimen": "LNR - Nombramiento por Alcalde",
+          "plazas": 1,
+          "norma": "Decreto municipal",
+          "vacantes": 0
+        }
+      ]
+    },
+    {
+      "id": "CORFEPALMIRA",
+      "nombre": "Corporacion de Eventos, Ferias y Espectaculos de Palmira",
+      "sigla": "CORFEPALMIRA",
+      "tipo": "Corporacion mixta sin animo de lucro",
+      "nit": "900280474-2",
+      "creacion": "24 de abril de 2009",
+      "responsable_actual": "Gilbert Urbano",
+      "cargo_responsable": "Gerente",
+      "regimen": "Nombramiento directo",
+      "planta_conocida": "No consolidada",
+      "certeza": "Directorio Principal 2026",
+      "posiciones_negociables": [
+        {
+          "id": "CORFE-GER",
+          "cargo": "Gerente/Director Ejecutivo",
+          "responsable": "Gilbert Urbano",
+          "regimen": "Nombramiento directo",
+          "plazas": 1,
+          "norma": "Estatutos internos",
+          "vacantes": 0
+        }
+      ]
+    },
+    {
+      "id": "AGUAS",
+      "nombre": "Aguas de Palmira S.A. E.S.P.",
+      "sigla": "AGUAS",
+      "tipo": "Empresa de Servicios Publicos",
+      "nit": "900596967-9",
+      "creacion": "Escritura 323 - Feb 2013",
+      "responsable_actual": "Maria Eugenia Munoz Fernandez",
+      "cargo_responsable": "Gerente",
+      "regimen": "Nombramiento por Junta Directiva",
+      "planta_conocida": "3 en nomina",
+      "certeza": "Directorio Principal 2026",
+      "nota": "Solo 3 personas en nomina. Opera via contrato con Aquaoccidente S.A. E.S.P.",
+      "posiciones_negociables": [
+        {
+          "id": "AGUAS-GER",
+          "cargo": "Gerente",
+          "responsable": "Maria Eugenia Munoz Fernandez",
+          "regimen": "Nombramiento por Junta Directiva",
+          "plazas": 1,
+          "norma": "Ley 142/1994 + Estatutos",
+          "vacantes": 0
+        }
+      ]
+    }
+  ]
+}
